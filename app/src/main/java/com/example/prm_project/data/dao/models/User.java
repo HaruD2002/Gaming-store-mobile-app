@@ -1,4 +1,4 @@
-package com.example.prm_project.data.models;
+package com.example.prm_project.data.dao.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
