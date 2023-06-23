@@ -9,14 +9,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.prm_project.data.dao.CartDAO;
+import com.example.prm_project.data.dao.CartItemDAO;
 import com.example.prm_project.data.dao.UserDAO;
+import com.example.prm_project.data.dao.models.Cart;
+import com.example.prm_project.data.dao.models.CartItem;
 import com.example.prm_project.data.dao.models.User;
 
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Cart.class, CartItem.class}, version = 1, exportSchema = false)
 public abstract class DAO extends RoomDatabase {
     public static final String DB_NAME = "GamingStore";
-    public abstract UserDAO userDAO();
     private static DAO INSTANCE;
 
     public DAO() {}
@@ -35,5 +38,7 @@ public abstract class DAO extends RoomDatabase {
         return INSTANCE;
     }
 
-    public static final int DB_VERSION = 1;
+    public abstract UserDAO userDAO();
+    public abstract CartItemDAO cartItemDAO();
+    public abstract CartDAO cartDAO();
 }
