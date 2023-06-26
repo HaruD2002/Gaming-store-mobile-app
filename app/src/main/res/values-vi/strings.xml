@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EDGE store</string>
+    <string name="email_validator">Email không khả dụng</string>
+    <string name="password_validator">password cần dài 8 kí tự có chữ hoa chữ thường và số</string>
+</resources>

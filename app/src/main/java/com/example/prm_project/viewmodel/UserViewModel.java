@@ -32,4 +32,10 @@ public class UserViewModel extends ViewModel {
                 .subscribe();
     }
 
+    public void CreateUser(User user){
+        userRepository.CreateUser(user).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
 }

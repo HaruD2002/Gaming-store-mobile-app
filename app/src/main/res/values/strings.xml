@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">PRM_project</string>
+    <string name="app_name">EDGE store</string>
+    <string name="email_validator">Email is not valid!!!</string>
+    <string name="password_validator">your password must contain a one uppercase, one number and one lowercase character</string>
 </resources>

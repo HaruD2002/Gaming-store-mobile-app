@@ -31,4 +31,17 @@ public class UserRepository {
     public Completable update(User user) {
         return userDAO.update(user);
     }
+
+    public Completable CreateUser(User user){
+        return userDAO.CreateUser(
+                user.getUsername(),
+                user.getFirst_name(),
+                user.getLast_name(),
+                user.getPassword(),
+                user.isGender(),
+                user.getPhone_number(),
+                user.getDOB(),
+                user.getCreated_dt()
+        );
+    }
 }
