@@ -3,6 +3,7 @@ package com.example.prm_project.data.dao.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,16 +13,16 @@ import java.util.Date;
 
 @Entity(tableName = "Cart_Item", foreignKeys = {
         @ForeignKey(entity = Cart.class, parentColumns = "ID",
-        childColumns = "Cart_ID", onDelete = ForeignKey.CASCADE),
+        childColumns = "cart_id", onDelete = ForeignKey.CASCADE),
         @ForeignKey(entity = Item.class, parentColumns = "ID",
-        childColumns = "Item_ID", onDelete = ForeignKey.CASCADE)
+        childColumns = "item_id", onDelete = ForeignKey.CASCADE)
         })
 public class CartItem {
     @PrimaryKey(autoGenerate = true)
-    private int ID; @NotNull
-    @ColumnInfo(name = "Cart_ID")
+    private int ID;
+    @ColumnInfo(name = "cart_id", index = true) @NotNull
     private int cardID;
-    @ColumnInfo(name = "Item_ID") @NotNull
+    @ColumnInfo(name = "item_id", index = true) @NotNull
     private int itemID;
     @ColumnInfo(name = "status") @NotNull
     private boolean status;
@@ -29,17 +30,20 @@ public class CartItem {
     private String created_dt;
     @ColumnInfo(name = "updated_dt")
     private String updated_dt;
+    @ColumnInfo(name = "quantity")
+    private String quantity;
 
     public CartItem() {
     }
 
-    public CartItem(int ID, int cardID, int itemID, boolean status, String created_dt, String updated_dt) {
+    public CartItem(int ID, int cardID, int itemID, boolean status, String created_dt, String updated_dt, String quantity) {
         this.ID = ID;
         this.cardID = cardID;
         this.itemID = itemID;
         this.status = status;
         this.created_dt = created_dt;
         this.updated_dt = updated_dt;
+        this.quantity = quantity;
     }
 
     public int getID() {
@@ -88,5 +92,13 @@ public class CartItem {
 
     public void setUpdated_dt(String updated_dt) {
         this.updated_dt = updated_dt;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }

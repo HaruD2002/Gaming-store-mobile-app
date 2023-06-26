@@ -2,6 +2,7 @@ package com.example.prm_project.data.dao.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,16 +15,21 @@ import java.util.Date;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int ID;
-    @NotNull
+    @ColumnInfo(name = "username")@NotNull
     private String username;
+    @ColumnInfo(name = "first_name")
     private String first_name;
+    @ColumnInfo(name = "last_name")
     private String last_name;
-    @NotNull
+    @ColumnInfo(name = "password")@NotNull
     private String password;
+    @ColumnInfo(name = "gender")
     private boolean gender;
-    @NotNull
+    @ColumnInfo(name = "phone_number") @NotNull
     private String phone_number;
+    @ColumnInfo(name = "DOB")
     private String DOB;
+    @ColumnInfo(name = "created_dt")
     private String created_dt;
     @ColumnInfo(defaultValue = "0")
     private int online_status;

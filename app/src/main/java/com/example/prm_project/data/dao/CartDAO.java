@@ -8,9 +8,5 @@ import io.reactivex.rxjava3.core.Completable;
 
 @Dao
 public interface CartDAO {
-    @Insert
-    Completable createCardForUser(int id);
 
-    @Delete
-    Completable deleteCardForUser(int id);
 }
