@@ -29,7 +29,7 @@ import com.example.prm_project.data.dao.models.User;
 @Database(entities = {
         User.class, Cart.class, CartItem.class, Shop.class, Item.class,
         Address.class, Category.class, ItemCategory.class, ItemImage.class
-}, version = 1, exportSchema = false)
+}, version = 2, exportSchema = false)
 @TypeConverters(BitmapConverter.class)
 public abstract class DAO extends RoomDatabase {
     public static final String DB_NAME = "GamingStore";
@@ -46,6 +46,7 @@ public abstract class DAO extends RoomDatabase {
                             super.onCreate(db);
                         }
                     })
+                    .fallbackToDestructiveMigrationFrom(1,2)
                     .build();
         }
         return INSTANCE;
