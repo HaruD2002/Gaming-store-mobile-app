@@ -2,4 +2,18 @@
     <string name="app_name">EDGE store</string>
     <string name="email_validator">Email is not valid!!!</string>
     <string name="password_validator">your password must contain a one uppercase, one number and one lowercase character</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="phone_number">Phone No</string>
+    <string name="username_hint">Enter your username</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="phoneNo_hint">Your phone number</string>
+    <string name="sign_up">Sign up</string>
+    <string name="country_code">Code</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Enter your email</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

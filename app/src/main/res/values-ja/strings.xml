@@ -2,4 +2,17 @@
 <resources>
     <string name="app_name">EDGE ストア</string>
     <string name="email_validator">メールアドレスを正しく入力してください</string>
+    <string name="password_validator">" パスワードには少なくとも 8 文字を含める必要があります"</string>
+    <string name="register">" 登録"</string>
+    <string name="login">" ログイン"</string>
+    <string name="username">" ユーザー名"</string>
+    <string name="password">パスワード</string>
+    <string name="phone_number">携帯電話番号</string>
+    <string name="username_hint">ユーザー名を入力してください</string>
+    <string name="password_hint">パスワードを入力してください</string>
+    <string name="phoneNo_hint">" 携帯電話番号を入力してください"</string>
+    <string name="sign_up">サインアップ</string>
+    <string name="country_code">Code</string>
+    <string name="email">Email</string>
+    <string name="email_hint">メールアドレスを入力してください</string>
 </resources>

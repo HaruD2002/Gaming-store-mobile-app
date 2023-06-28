@@ -4,13 +4,16 @@ import androidx.lifecycle.LiveData;
 
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.User;
+import com.example.prm_project.utils.PasswordHashing;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 
 public class UserRepository {
     private final UserDAO userDAO;
+    private final PasswordHashing ph = new PasswordHashing();
 
     public UserRepository(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -32,16 +35,11 @@ public class UserRepository {
         return userDAO.update(user);
     }
 
-    public Completable CreateUser(User user){
-        return userDAO.CreateUser(
-                user.getUsername(),
-                user.getFirst_name(),
-                user.getLast_name(),
-                user.getPassword(),
-                user.isGender(),
-                user.getPhone_number(),
-                user.getDOB(),
-                user.getCreated_dt()
-        );
+    public Completable CreateUser(String username, String password,String email, String phoneNo, String createdDt){
+        return userDAO.CreateUser(username, password,email, phoneNo, createdDt);
+    }
+
+    public LiveData<User> getSingleUser(String username, String password) {
+        return userDAO.loginUser(username, password);
     }
 }

@@ -11,23 +11,28 @@ import java.util.regex.Pattern;
 
 public class UserValidator {
 
-    private boolean EmailValidator(Context context, EditText email){
-        String email_regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-        Pattern pattern = Pattern.compile(email_regex);
-        Matcher match = pattern.matcher(email.getText().toString());
-        if(!match.find()){
-            email.setError(context.getResources().getString(R.string.email_validator));
+    public boolean LengthValidator(Context context, String text, int length){
+        if(text.length() < length){
             return false;
         }
         return true;
     }
 
-    private Boolean PasswordValidator(Context context, EditText password){
+    public boolean EmailValidator(Context context, String email){
+        String email_regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(email_regex);
+        Matcher match = pattern.matcher(email);
+        if(!match.find()){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean PasswordValidator(Context context, String password){
         String password_regex = "^(?=.*\\d)(?=.*[a-z]{2,})(?=.*[A-Z]).{8,}$";
         Pattern pattern = Pattern.compile(password_regex);
-        Matcher match = pattern.matcher(password.getText().toString());
+        Matcher match = pattern.matcher(password);
         if(!match.find()){
-            password.setError(context.getResources().getString(R.string.password_validator));
             return false;
         }
         return true;

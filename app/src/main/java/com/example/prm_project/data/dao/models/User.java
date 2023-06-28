@@ -15,17 +15,25 @@ import java.util.Date;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int ID;
-    @ColumnInfo(name = "username")@NotNull
+    @ColumnInfo(name = "username")
+    @NotNull
     private String username;
     @ColumnInfo(name = "first_name")
     private String first_name;
     @ColumnInfo(name = "last_name")
     private String last_name;
-    @ColumnInfo(name = "password")@NotNull
+    @ColumnInfo(name = "password")
+    @NotNull
     private String password;
+
+    @ColumnInfo(name = "mail")
+    @NotNull
+    private String mail;
+
     @ColumnInfo(name = "gender")
     private boolean gender;
-    @ColumnInfo(name = "phone_number") @NotNull
+    @ColumnInfo(name = "phone_number")
+    @NotNull
     private String phone_number;
     @ColumnInfo(name = "DOB")
     private String DOB;
@@ -37,12 +45,13 @@ public class User {
     public User() {
     }
 
-    public User(int ID, @NotNull String username, String first_name, String last_name, @NotNull String password, boolean gender, @NotNull String phone_number, String DOB, String created_dt, int online_status) {
+    public User(int ID, @NotNull String username, String first_name, String last_name, @NotNull String password, @NotNull String mail, boolean gender, @NotNull String phone_number, String DOB, String created_dt, int online_status) {
         this.ID = ID;
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.password = password;
+        this.mail = mail;
         this.gender = gender;
         this.phone_number = phone_number;
         this.DOB = DOB;
@@ -90,6 +99,15 @@ public class User {
 
     public void setPassword(@NotNull String password) {
         this.password = password;
+    }
+
+    @NotNull
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(@NotNull String mail) {
+        this.mail = mail;
     }
 
     public boolean isGender() {
