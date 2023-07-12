@@ -1,0 +1,153 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.ListAddressActivity">
+
+    <!-- Thiết lập phần Header hiển thị thông tin tài khoản -->
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/username_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_profile_label"
+            android:layout_marginTop="22dp"
+            android:text="Username:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/username_textview"
+            android:layout_width="379dp"
+            android:layout_height="wrap_content"
+            android:text="kingof******"
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/fullname_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullname_label"
+            android:layout_marginTop="10dp"
+            android:text="Fullname:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fullname_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="16sp"
+            android:textColor="#666"/>
+
+        <TextView
+            android:id="@+id/phone_number_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_number_label"
+            android:layout_marginTop="10dp"
+            android:text="Phone Number:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/phone_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:textSize="16sp"
+            android:textColor="#666"/>
+    </LinearLayout>
+
+    <!-- Thiết lập phần danh sách địa chỉ có thể trượt lên xuống -->
+    <ScrollView
+        android:id="@+id/address_scrollview"
+        android:layout_below="@+id/header_layout"
+        android:layout_above="@+id/new_address_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/address_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Thiết lập một địa chỉ -->
+            <LinearLayout
+                android:id="@+id/address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/address_number_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address Number"
+                    android:textSize="15sp"
+                    android:textColor="#333"
+                    android:enabled="false"/>
+
+                <TextView
+                    android:id="@+id/address_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="18sp"
+                    android:textColor="#666"
+                    android:enabled="false"/>
+
+                <TextView
+                    android:id="@+id/address_type_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address Type"
+                    android:textSize="16sp"
+                    android:textColor="#666"
+                    android:enabled="false"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/edit_address_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit Address"/>
+
+                    <Button
+                        android:id="@+id/delete_address_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delete Address" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Lặp lại địa chỉ cho đến hết danh sách -->
+            <!-- ... -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Thiết lập button thêm địa chỉ mới -->
+    <Button
+        android:id="@+id/new_address_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Add new Address"/>
+
+</RelativeLayout>

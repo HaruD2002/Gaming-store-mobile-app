@@ -1,9 +1,13 @@
 package com.example.prm_project.views;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +18,12 @@ import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.viewmodel.UserViewModel;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -22,15 +32,19 @@ public class UserProfileActivity extends AppCompatActivity {
     private User user;
     private Button btn_EditProfile;
     private Button btn_ChangePassword;
+    private Button btn_ChooseDate;
+    Calendar dateOfBirth = null;
 
     TextView userNameTextView;
-    TextView firstNameTextView;
-    TextView lastNameTextView;
+    TextInputEditText firstNameTextView;
+    TextInputEditText lastNameTextView;
     TextView password;
-    TextView gender;
-    TextView phoneNumber;
+    RadioButton male;
+    RadioButton feMale;
+
+    TextInputEditText phoneNumber;
     TextView dob;
-    TextView onlineStatus;
+    Switch onlineStatus;
     UserDAO userDAO;
 
     @Override
@@ -54,18 +68,41 @@ public class UserProfileActivity extends AppCompatActivity {
     private void bindingView() {
         // Ánh xạ các phần tử UI
         userNameTextView = findViewById(R.id.username_textview);
-        firstNameTextView = findViewById(R.id.first_name_textview);
-        lastNameTextView = findViewById(R.id.last_name_textview);
+        firstNameTextView = findViewById(R.id.first_name_input);
+        lastNameTextView = findViewById(R.id.last_name_input);
         password = findViewById(R.id.password_textview);
-        gender = findViewById(R.id.gender_textview);
-        phoneNumber = findViewById(R.id.phone_number_textview);
-        dob = findViewById(R.id.birthdate_textview);
-        onlineStatus = findViewById(R.id.online_status_textview);
+        phoneNumber = findViewById(R.id.phone_number_input);
+        dob = findViewById(R.id.date_of_birth_text_view);
+        onlineStatus = findViewById(R.id.online_status_switch);
+        male = findViewById(R.id.male_radio_button);
+        feMale = findViewById(R.id.female_radio_button);
 
     }
 
+    private void showDatePicker() {
+        DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+            dateOfBirth.set(year, monthOfYear, dayOfMonth);
+            updateDateOfBirthTextView();
+        };
+
+        int year = dateOfBirth.get(Calendar.YEAR);
+        int month = dateOfBirth.get(Calendar.MONTH);
+        int day = dateOfBirth.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, onDateSetListener, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private void updateDateOfBirthTextView() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dateOfBirthString = simpleDateFormat.format(dateOfBirth.getTime());
+        dob.setText(dateOfBirthString);
+    }
+
     private void bindingAction() {
-        btn_EditProfile = (Button) findViewById(R.id.edit_profile_button);
+        btn_ChooseDate = (Button) findViewById(R.id.date_of_birth_button);
+        btn_ChooseDate.setOnClickListener(view -> showDatePicker());
+        btn_EditProfile = (Button) findViewById(R.id.btn_EditProfile);
         btn_EditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +112,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     //Save information and sent to database
                     user.setFirst_name(firstNameTextView.toString());
                     user.setLast_name(lastNameTextView.toString());
-                    user.setGender(gender.toString().equals("Male") ? true : false);
+                    user.setGender(male.isChecked());
                     user.setPhone_number(phoneNumber.toString());
                     user.setDOB(dob.toString());
                     userViewModel.update(user);
@@ -83,7 +120,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     //Turn off editmode
                     firstNameTextView.setEnabled(false);
                     lastNameTextView.setEnabled(false);
-                    gender.setEnabled(false);
+                    male.setEnabled(false);
+                    feMale.setEnabled(false);
                     phoneNumber.setEnabled(false);
                     dob.setEnabled(false);
                     btn_EditProfile.setText(R.string.edit_profile_button_text);
@@ -91,7 +129,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 } else {
                     firstNameTextView.setEnabled(true);
                     lastNameTextView.setEnabled(true);
-                    gender.setEnabled(true);
+                    male.setEnabled(true);
+                    feMale.setEnabled(true);
                     phoneNumber.setEnabled(true);
                     dob.setEnabled(true);
                     btn_EditProfile.setText(R.string.save_changes_button_text);
@@ -99,7 +138,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             }
         });
-        btn_ChangePassword = (Button) findViewById(R.id.change_password_button);
+        btn_ChangePassword = (Button) findViewById(R.id.btn_ChangePassword);
         btn_ChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +169,11 @@ public class UserProfileActivity extends AppCompatActivity {
                 passWordShow += "*";
             }
             password.setText(passWordShow);
-            gender.setText(user.isGender() == true ? "Male" : "Female");
+            if (user.isGender()) {
+                male.setChecked(true);
+            } else {
+                feMale.setChecked(true);
+            }
             phoneNumber.setText(user.getPhone_number());
             dob.setText(user.getDOB());
             onlineStatus.setText(user.getOnline_status() == 1 ? "Online" : "Offline");

@@ -2,5 +2,7 @@
     <string name="app_name">PRM_project</string>
     <string name="save_changes_button_text">Save Change</string>
     <string name="edit_profile_button_text">Edit Profile</string>
+    <string name="title_activity_list_address">ListAddressActivity</string>
+
 
 </resources>

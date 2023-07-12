@@ -20,12 +20,9 @@ public class UserRepository {
     public Completable insert(User user) {
         return userDAO.insert(user);
     }
-
     public Completable delete(User user) {
         return userDAO.delete(user);
     }
-
     public Completable update(User user) {return userDAO.update(user);}
-
     public LiveData<User> getUserInformationByID(int userID) { return  userDAO.getUserById(userID); }
 }

@@ -13,6 +13,14 @@
         android:theme="@style/Theme.PRM_project"
         tools:targetApi="31">
         <activity
+            android:name=".views.ListAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ListAddressActivity"
+            android:exported="false"
+            android:label="@string/title_activity_list_address"
+            android:theme="@style/Theme.PRM_project" />
+        <activity
             android:name=".views.ChangePasswordActivity"
             android:exported="false" />
         <activity
