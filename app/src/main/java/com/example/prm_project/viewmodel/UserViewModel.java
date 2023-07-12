@@ -17,6 +17,7 @@ public class UserViewModel extends ViewModel {
     private UserRepository userRepository;
     private LiveData<List<User>> userList;
     private UserDAO userDAO;
+
     public void init(UserDAO userDAO) {
         userRepository = new UserRepository(userDAO);
         userList = getUserList();
@@ -31,5 +32,17 @@ public class UserViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
+    public void update(User user) {
+        userRepository.update(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    public LiveData<User> getUserInformationByID(int id) {
+        return userRepository.getUserInformationByID(id);
+    }
+
 
 }
