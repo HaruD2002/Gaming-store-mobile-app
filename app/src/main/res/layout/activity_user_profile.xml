@@ -252,6 +252,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Online"
+            android:checked="false"
             android:textColor="@color/black" />
         <!-- Save Button -->
         <Button

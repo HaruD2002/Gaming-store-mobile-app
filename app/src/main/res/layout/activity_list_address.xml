@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.ListAddressActivity">
 
-    <!-- Thiết lập phần Header hiển thị thông tin tài khoản -->
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
@@ -67,82 +67,76 @@
             android:textColor="#666"/>
     </LinearLayout>
 
-    <!-- Thiết lập phần danh sách địa chỉ có thể trượt lên xuống -->
-    <ScrollView
-        android:id="@+id/address_scrollview"
-        android:layout_below="@+id/header_layout"
-        android:layout_above="@+id/new_address_button"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/address_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="145dp"
+        android:layout_below="@+id/header_layout"
+        android:layout_marginTop="12dp"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:id="@+id/address_list_layout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="94dp"
+            android:layout_height="28dp"
+            android:text="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/address"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="2dp"
+
+            />
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="256dp"
+            android:layout_height="45dp"
+            android:enabled="false"
+            android:text="Address"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/edit_button"
+            app:layout_constraintHorizontal_bias="0.23"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.504" />
+
+        <EditText
+            android:id="@+id/address_type"
+            android:layout_width="242dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:enabled="false"
+            android:text="Home"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:text="Edit"
+            app:layout_constraintBottom_toTopOf="@+id/delete_button"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="266dp" />
 
-            <!-- Thiết lập một địa chỉ -->
-            <LinearLayout
-                android:id="@+id/address_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="16dp">
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="268dp" />
 
-                <TextView
-                    android:id="@+id/address_number_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address Number"
-                    android:textSize="15sp"
-                    android:textColor="#333"
-                    android:enabled="false"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/address_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address"
-                    android:textSize="18sp"
-                    android:textColor="#666"
-                    android:enabled="false"/>
-
-                <TextView
-                    android:id="@+id/address_type_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address Type"
-                    android:textSize="16sp"
-                    android:textColor="#666"
-                    android:enabled="false"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/edit_address_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Edit Address"/>
-
-                    <Button
-                        android:id="@+id/delete_address_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Delete Address" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Lặp lại địa chỉ cho đến hết danh sách -->
-            <!-- ... -->
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- Thiết lập button thêm địa chỉ mới -->
     <Button
         android:id="@+id/new_address_button"
         android:layout_width="match_parent"

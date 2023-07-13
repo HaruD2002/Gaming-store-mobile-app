@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.User;
 
@@ -17,6 +18,7 @@ import com.example.prm_project.data.dao.models.User;
 public abstract class DAO extends RoomDatabase {
     public static final String DB_NAME = "GamingStore";
     public abstract UserDAO userDAO();
+    public abstract AddressDAO addressDAO();
     private static DAO INSTANCE;
 
     public DAO() {}
