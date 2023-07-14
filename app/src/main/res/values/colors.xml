@@ -19,8 +19,6 @@
     <color name="gray2">#d1d8e0</color>
     <color name="gray3">#a4b0be</color>
     <color name="while2">#dff9fb</color>
-
-
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -28,13 +26,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-<<<<<<< HEAD
     <color name="transparent">#00FFFFFF</color>
     <color name="blue_background">#0fbcf9</color>
     <color name="blue_background_2nd">#48dbfb</color>
-=======
     <color name="lavender">#8692f7</color>
     <color name="red">#c70000</color>
     <color name="green">#00ff00</color>
->>>>>>> d12ca03 (feature/UI)
 </resources>
