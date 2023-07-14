@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.util.Log;
 
+
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
@@ -15,6 +16,8 @@ import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.viewmodel.UserViewModel;
 
 import java.util.List;
+
+
 
 public class MainActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
