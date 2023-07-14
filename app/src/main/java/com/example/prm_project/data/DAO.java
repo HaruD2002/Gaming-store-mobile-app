@@ -11,10 +11,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.UserDAO;
+import com.example.prm_project.data.dao.models.Address;
 import com.example.prm_project.data.dao.models.User;
 
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Address.class}, version = 1, exportSchema = false)
 public abstract class DAO extends RoomDatabase {
     public static final String DB_NAME = "GamingStore";
     public abstract UserDAO userDAO();

@@ -16,15 +16,10 @@
             android:name=".views.ListAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".views.ListAddressActivity"
-            android:exported="false"
-            android:label="@string/title_activity_list_address"
-            android:theme="@style/Theme.PRM_project" />
-        <activity
             android:name=".views.ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.UserProfileActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
