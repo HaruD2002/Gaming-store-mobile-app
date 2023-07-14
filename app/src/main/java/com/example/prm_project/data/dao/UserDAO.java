@@ -28,4 +28,11 @@ public interface UserDAO {
 
     @Query("Select * from User where User.ID = :id")
     LiveData<User> getUserById(int id);
+
+    @Query("Select * from User where User.username=:username and User.password=:password")
+    LiveData<User> loginUser(String username, String password);
+
+    @Query("Insert into User(username ,password, phone_number, mail, created_dt) " +
+            "values(:username,:password,:mail ,:phoneNumber, :CreatedDt)")
+    Completable CreateUser(String username, String password,String mail, String phoneNumber, String CreatedDt);
 }

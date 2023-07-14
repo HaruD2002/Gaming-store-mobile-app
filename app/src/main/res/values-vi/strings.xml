@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EDGE store</string>
+    <string name="email_validator">Email không khả dụng</string>
+    <string name="password_validator">password cần dài 8 kí tự có chữ hoa chữ thường và số</string>
+    <string name="register">Đăng kí</string>
+    <string name="login">Đăng nhập</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="username_hint">Tài khoản của bạn là ...</string>
+    <string name="password_hint">Mật khẩu của bạn là ...</string>
+    <string name="phoneNo_hint">Số điện thoại của bạn là ...</string>
+    <string name="sign_up">Đăng kí</string>
+    <string name="country_code">Code</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Email của bạn là ...</string>
+</resources>

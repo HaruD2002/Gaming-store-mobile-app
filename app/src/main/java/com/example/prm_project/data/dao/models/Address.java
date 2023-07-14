@@ -1,27 +1,30 @@
 package com.example.prm_project.data.dao.models;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import org.jetbrains.annotations.NotNull;
-
-@Entity(tableName = "Address")
+@Entity(tableName = "user_address", foreignKeys = {@ForeignKey(
+        entity = User.class, parentColumns = "ID", childColumns = "user_id",
+        onDelete = ForeignKey.CASCADE
+)})
 public class Address {
     @PrimaryKey(autoGenerate = true)
     private int ID;
-    @NotNull
-    private int user_id;
+    @ColumnInfo(name = "user_id", index = true)
+    private int userID;
+    @ColumnInfo(name = "address")
     private String address;
-    private int address_type;
 
     public Address() {
     }
 
-    public Address(int ID, @NotNull int user_id, String address, int address_type) {
+    public Address(int ID, int userID, String address) {
         this.ID = ID;
-        this.user_id = user_id;
+        this.userID = userID;
         this.address = address;
-        this.address_type = address_type;
     }
 
     public int getID() {
@@ -32,12 +35,12 @@ public class Address {
         this.ID = ID;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getAddress() {
@@ -46,13 +49,5 @@ public class Address {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getAddress_type() {
-        return address_type;
-    }
-
-    public void setAddress_type(int address_type) {
-        this.address_type = address_type;
     }
 }
