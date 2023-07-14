@@ -32,13 +32,13 @@ public class UserViewModel extends ViewModel {
     }
 
 
-    public boolean Login(String username, String password){
+    public User Login(String username, String password){
         String encrypt_password = ph.encoding(password);
-        LiveData<User> user = userRepository.getSingleUser(username, encrypt_password);
+        User user = userRepository.getSingleUser(username, encrypt_password);
         if(user != null){
-            return true;
+            return user;
         }
-        return false;
+        return null;
     }
 
     public void CreateNewUser(String username, String password, String email, String phoneNo){

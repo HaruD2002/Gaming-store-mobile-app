@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
+import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.viewmodel.UserViewModel;
 import com.example.prm_project.views.MainActivity;
 
@@ -47,7 +48,8 @@ public class LoginFragment extends Fragment {
     private void loginUser(View view) {
         String username = login_username.getText().toString();
         String password = login_password.getText().toString();
-        if(userViewModel.Login(username, password)){
+        User user = userViewModel.Login(username, password);
+        if(user != null){
             Log.d("login", "login success");
             Toast.makeText(getActivity().getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
             Intent toHome = new Intent(getActivity(), MainActivity.class);

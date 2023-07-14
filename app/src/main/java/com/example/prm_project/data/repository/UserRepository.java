@@ -39,7 +39,7 @@ public class UserRepository {
         return userDAO.CreateUser(username, password,email, phoneNo, createdDt);
     }
 
-    public LiveData<User> getSingleUser(String username, String password) {
+    public User getSingleUser(String username, String password) {
         return userDAO.loginUser(username, password);
     }
 }
