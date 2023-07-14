@@ -3,6 +3,8 @@ package com.example.prm_project.views;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,7 +63,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void getViewModel() {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        userId = getIntent().getIntExtra("USER_ID", -1);
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", -1);
         user = userViewModel.getUserInformationByID(userId).getValue();
         userViewModel.init(userDAO);
     }

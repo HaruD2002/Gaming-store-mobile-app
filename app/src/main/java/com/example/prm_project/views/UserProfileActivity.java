@@ -1,7 +1,9 @@
 package com.example.prm_project.views;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,7 +63,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private void getViewModel() {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        userId = getIntent().getIntExtra("USER_ID", -1);
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", -1);
         user = userViewModel.getUserInformationByID(userId).getValue();
         userViewModel.init(userDAO);
     }
@@ -107,7 +110,7 @@ public class UserProfileActivity extends AppCompatActivity {
         btn_EditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btn_EditProfile.getText().equals(getString(R.string.save_changes_button_text))) {
+                if (btn_EditProfile.getText().equals("Save")) {
 
 
                     //Save information and sent to database
@@ -125,7 +128,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     feMale.setEnabled(false);
                     phoneNumber.setEnabled(false);
                     dob.setEnabled(false);
-                    btn_EditProfile.setText(R.string.edit_profile_button_text);
+                    btn_EditProfile.setText("Edit");
 
                 } else {
                     firstNameTextView.setEnabled(true);
@@ -134,7 +137,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     feMale.setEnabled(true);
                     phoneNumber.setEnabled(true);
                     dob.setEnabled(true);
-                    btn_EditProfile.setText(R.string.save_changes_button_text);
+                    btn_EditProfile.setText("Save");
 
                 }
             }
@@ -144,7 +147,6 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
-                intent.putExtra("USER_ID", userId);
                 startActivity(intent);
             }
         });

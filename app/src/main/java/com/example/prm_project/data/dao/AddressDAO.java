@@ -25,9 +25,9 @@ public interface AddressDAO {
     @Delete
     Completable delete(Address address);
 
-    @Query("select * from Address where Address.user_id = :id")
+    @Query("select * from user_address where user_address.user_id = :id")
     LiveData<List<Address>> getAllAddressOfUser(int id);
 
-    @Query("Select * from Address where Address.ID = :id")
+    @Query("Select * from user_address where user_address.ID = :id")
     LiveData<Address> getAddressById(int id);
 }

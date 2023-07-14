@@ -12,6 +12,7 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.prm_project.data.converter.BitmapConverter;
+import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.CartDAO;
 import com.example.prm_project.data.dao.CartItemDAO;
 import com.example.prm_project.data.dao.UserDAO;
@@ -54,4 +55,5 @@ public abstract class DAO extends RoomDatabase {
     public abstract UserDAO userDAO();
     public abstract CartItemDAO cartItemDAO();
     public abstract CartDAO cartDAO();
+    public abstract AddressDAO addressDAO();
 }

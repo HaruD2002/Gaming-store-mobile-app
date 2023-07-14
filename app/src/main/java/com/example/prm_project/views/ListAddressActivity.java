@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,21 +59,23 @@ public class ListAddressActivity extends AppCompatActivity {
         displayListAddress();
     }
 
-    private void getViewModel(){
+    private void getViewModel() {
         addressDAO = DAO.getInstance(getApplicationContext()).addressDAO();
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
-        userId = getIntent().getIntExtra("USER_ID", -1);
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", -1);
         lsAddressOfUser = addressViewModel.getAddressListOfUser(userId).getValue();
-
     }
-    private void bindingView(){
+
+    private void bindingView() {
         recyclerView = findViewById(R.id.address_item);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new AddressAdapter(this, lsAddressOfUser, addressViewModel);
         recyclerView.setAdapter(adapter);
     }
-    private void bidingAction(){
+
+    private void bidingAction() {
         Button add_button = findViewById(R.id.new_address_button);
         add_button.setOnClickListener(v -> {
             // Thêm một đối tượng Address mới vào danh sách và cập nhật adapter
@@ -83,7 +86,8 @@ public class ListAddressActivity extends AppCompatActivity {
         });
 
     }
-    private void displayListAddress(){
+
+    private void displayListAddress() {
 
     }
 

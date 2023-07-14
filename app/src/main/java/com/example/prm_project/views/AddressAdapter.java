@@ -41,13 +41,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         Address address = addressList.get(position);
         holder.number.setText(address.getID());
         holder.address.setText(address.getAddress());
-        holder.addressType.setText(address.getAddress_type());
+        //holder.addressType.setText(address.getAddress_type());
         holder.editButton.setOnClickListener(v -> {
             if (holder.editButton.getText().equals("Save")) {
 
                 //Save information and sent to database
                 address.setAddress(holder.address.toString());
-                address.setAddress_type(Integer.parseInt(holder.addressType.toString()));
+                //address.setAddress_type(Integer.parseInt(holder.addressType.toString()));
                 addressViewModel.update(address);
 
                 //Turn off editmode
