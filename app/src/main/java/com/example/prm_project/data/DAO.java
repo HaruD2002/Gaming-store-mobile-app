@@ -38,6 +38,7 @@ public abstract class DAO extends RoomDatabase {
     public DAO() {}
 
     public static synchronized DAO getInstance(Context context){
+//        context.deleteDatabase(DB_NAME);
         if (INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context, DAO.class, DB_NAME).addCallback(
                     new Callback() {

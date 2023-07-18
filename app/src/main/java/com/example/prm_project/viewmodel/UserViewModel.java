@@ -1,9 +1,15 @@
 package com.example.prm_project.viewmodel;
 
+import android.app.Application;
+import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.User;
@@ -12,45 +18,54 @@ import com.example.prm_project.utils.PasswordHashing;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class UserViewModel extends ViewModel {
+public class UserViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
     private final PasswordHashing ph = new PasswordHashing();
     private LiveData<List<User>> userList;
     private UserDAO userDAO;
-    public void init(UserDAO userDAO) {
-        userRepository = new UserRepository(userDAO);
-        userList = getUserList();
 
+    public UserViewModel(@NonNull Application application) {
+        super(application);
+        userRepository = new UserRepository(application);
+        userList = getUserList();
     }
+
     public LiveData<List<User>> getUserList(){
         return userRepository.getUserList();
     }
 
 
-    public boolean Login(String username, String password){
+    public LiveData<User> Login(String username, String password){
         String encrypt_password = ph.encoding(password);
         LiveData<User> user = userRepository.getSingleUser(username, encrypt_password);
         if(user != null){
-            return true;
+            return user;
         }
-        return false;
+        return null;
     }
 
-    public void CreateNewUser(String username, String password, String email, String phoneNo){
+    public void CreateNewUser(String username, String password, String email, String phoneNo, TextView message){
         String encrypt_password = ph.encoding(password);
         String createdDt = new Date().toString();
-            userRepository.CreateUser(username, password, email, phoneNo, createdDt)
+            userRepository.CreateUser(username, encrypt_password, email, phoneNo, createdDt)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            () -> {},
-                            throwable -> {
-                                Log.e("Error", "something when wrong" + throwable.getMessage());
+                            () -> {
+                            },
+                            error -> {
+                                if(error instanceof SQLiteConstraintException){
+                                    message.setVisibility(View.VISIBLE);
+                                }
+                                else {
+                                    Log.e("Error", "something else");
+                                }
                             }
                     );
     }

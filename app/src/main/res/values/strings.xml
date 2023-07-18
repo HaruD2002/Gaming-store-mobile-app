@@ -15,5 +15,7 @@
     <string name="country_code">Code</string>
     <string name="email">Email</string>
     <string name="email_hint">Enter your email</string>
+    <string name="LoginFail" translatable="false">Username and password is not match please try again</string>
+    <string name="exist_username_error" translatable="false">Username already exist</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

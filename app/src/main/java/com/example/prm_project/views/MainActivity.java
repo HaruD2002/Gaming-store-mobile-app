@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private void getViewModel() {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        userViewModel.init(userDAO);
     }
 
     private void observeView() {

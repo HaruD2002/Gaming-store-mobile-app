@@ -1,6 +1,7 @@
 package com.example.prm_project.data.dao;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -29,10 +30,13 @@ public interface UserDAO {
     @Query("Select * from User where User.ID = :id")
     LiveData<User> getUserById(int id);
 
-    @Query("Select * from User where User.username=:username and User.password=:password")
-    LiveData<User> loginUser(String username, String password);
+    @Query("Select * from User where username=:username")
+    LiveData<User> loginUser(String username);
 
     @Query("Insert into User(username ,password, phone_number, mail, created_dt) " +
             "values(:username,:password,:mail ,:phoneNumber, :CreatedDt)")
     Completable CreateUser(String username, String password,String mail, String phoneNumber, String CreatedDt);
+
+    @Query("select * from User where username=:username LIMIT 1")
+    LiveData<User> getUserName(String username);
 }

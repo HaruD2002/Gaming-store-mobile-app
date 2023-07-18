@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
@@ -30,11 +31,11 @@ import com.example.prm_project.viewmodel.UserViewModel;
     private EditText u_phone;
     private UserDAO userDAO;
     private UserViewModel userViewModel;
+    private TextView register_exist_username_message;
 
      private void getVM(){
          userDAO = DAO.getInstance(getActivity().getApplicationContext()).userDAO();
          userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-         userViewModel.init(userDAO);
      }
 
     public void bindingView(View view){
@@ -43,6 +44,7 @@ import com.example.prm_project.viewmodel.UserViewModel;
         u_password = view.findViewById(R.id.register_user_password_txt);
         u_email = view.findViewById(R.id.register_email_u);
         u_phone = view.findViewById(R.id.register_user_phone_no_txt);
+        register_exist_username_message = view.findViewById(R.id.register_exist_username_message);
     }
     public void bindingAction(){
         btn_register_commit_u.setOnClickListener(this::CreateNewUser);
@@ -73,7 +75,7 @@ import com.example.prm_project.viewmodel.UserViewModel;
             check = false;
         }
         if(check){
-            userViewModel.CreateNewUser(username,password,email,phoneNo);
+            userViewModel.CreateNewUser(username,password,email,phoneNo, register_exist_username_message);
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.login_and_register_container, new LoginFragment())
