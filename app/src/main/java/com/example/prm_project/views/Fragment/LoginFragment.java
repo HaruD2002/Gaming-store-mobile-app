@@ -1,6 +1,8 @@
 package com.example.prm_project.views.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,49 +16,68 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
+import com.example.prm_project.utils.PasswordHashing;
 import com.example.prm_project.viewmodel.UserViewModel;
 import com.example.prm_project.views.MainActivity;
+
+import org.w3c.dom.Text;
 
 public class LoginFragment extends Fragment {
     private EditText login_username;
     private EditText login_password;
+    private TextView login_fail_message;
     private Button login_user_btn;
     private UserDAO userDAO;
     private UserViewModel userViewModel;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
-    private void bindingView(View view){
+    private void bindingView(View view) {
         login_username = view.findViewById(R.id.login_username);
         login_password = view.findViewById(R.id.login_password);
         login_user_btn = view.findViewById(R.id.login_user_btn);
+        login_fail_message = view.findViewById(R.id.login_fail_message);
     }
-    private void bindingAction(){
+
+    private void bindingAction() {
         login_user_btn.setOnClickListener(this::loginUser);
     }
 
-    private void getVM(){
+    private void getVM() {
         userDAO = DAO.getInstance(getActivity().getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        userViewModel.init(userDAO);
     }
 
     private void loginUser(View view) {
         String username = login_username.getText().toString();
         String password = login_password.getText().toString();
-        if(userViewModel.Login(username, password)){
-            Log.d("login", "login success");
-            Toast.makeText(getActivity().getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
-            Intent toHome = new Intent(getActivity(), MainActivity.class);
-            startActivity(toHome);
-        }
-        else{
-            Toast.makeText(getActivity().getApplicationContext(), "Login fail", Toast.LENGTH_SHORT).show();
-            Log.d("login", "login fail");
-        }
+        PasswordHashing ph = new PasswordHashing();
+        String encrypt = ph.encoding(password);
+
+        userViewModel.Login(username,password).observe(this, user -> {
+            Log.d("user", "current trang is "+ encrypt.equals(user.getPassword()));
+            if (user != null) {
+                if(ph.verifyPassword(password, user.getPassword())) {
+                    sharedPreferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+                    editor = sharedPreferences.edit();
+                    editor.putInt("ID", user.getID());
+                    editor.putString("Username", user.getUsername());
+                    editor.apply();
+                    Intent toHome = new Intent(getActivity(), MainActivity.class);
+                    startActivity(toHome);
+                } else{
+                    user = null;
+                    login_fail_message.setVisibility(View.VISIBLE);
+                }
+            } else {
+                login_fail_message.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

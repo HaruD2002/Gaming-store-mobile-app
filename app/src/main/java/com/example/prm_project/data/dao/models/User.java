@@ -2,16 +2,15 @@ package com.example.prm_project.data.dao.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.time.LocalDateTime;
-import java.util.Date;
+import org.jetbrains.annotations.Nullable;
 
 
-@Entity(tableName = "User")
+@Entity(tableName = "User", indices = {@Index(value = {"username"},
+        unique = true)})
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int ID;
@@ -30,7 +29,7 @@ public class User {
     @NotNull
     private String mail;
 
-    @ColumnInfo(name = "gender")
+    @ColumnInfo(name = "gender", defaultValue = "0") @Nullable
     private boolean gender;
     @ColumnInfo(name = "phone_number")
     @NotNull
