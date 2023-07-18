@@ -22,6 +22,7 @@ public class UserViewModel extends ViewModel {
     private final PasswordHashing ph = new PasswordHashing();
     private LiveData<List<User>> userList;
     private UserDAO userDAO;
+
     public void init(UserDAO userDAO) {
         userRepository = new UserRepository(userDAO);
         userList = getUserList();
@@ -54,5 +55,17 @@ public class UserViewModel extends ViewModel {
                             }
                     );
     }
+
+    public void update(User user) {
+        userRepository.update(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    public LiveData<User> getUserInformationByID(int id) {
+        return userRepository.getUserInformationByID(id);
+    }
+
 
 }

@@ -42,4 +42,8 @@ public class UserRepository {
     public LiveData<User> getSingleUser(String username, String password) {
         return userDAO.loginUser(username, password);
     }
+
+    public LiveData<User> getUserInformationByID(int id){
+        return  userDAO.getUserById(id);
+    }
 }
