@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.prm_project.views.MainActivity;
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.utils.PasswordHashing;
 import com.example.prm_project.viewmodel.UserViewModel;
-import com.example.prm_project.views.MainActivity;
-
-import org.w3c.dom.Text;
 
 public class LoginFragment extends Fragment {
     private EditText login_username;

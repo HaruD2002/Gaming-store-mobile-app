@@ -58,7 +58,7 @@ public class ListAddressActivity extends AppCompatActivity {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
         SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", -1);
+        int userId = sharedPreferences.getInt("USER_ID", 1);
         lsAddressOfUser = addressViewModel.getAddressListOfUser(userId).getValue();
     }
 

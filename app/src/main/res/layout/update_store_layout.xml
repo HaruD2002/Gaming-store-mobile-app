@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/while2"
-    tools:context=".UpdateStoreActivity">
+    tools:context=".views.UpdateStoreActivity">
 
     <!-- Store Information -->
 

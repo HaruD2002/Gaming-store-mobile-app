@@ -64,7 +64,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", -1);
+        int userId = sharedPreferences.getInt("USER_ID", 1);
         user = userViewModel.getUserInformationByID(userId).getValue();
     }
 

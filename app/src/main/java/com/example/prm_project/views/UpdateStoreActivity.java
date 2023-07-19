@@ -1,4 +1,4 @@
-package com.example.prm_project;
+package com.example.prm_project.views;
 
 import android.annotation.SuppressLint;
 import android.widget.Toast;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.example.prm_project.R;
 
 
 public class UpdateStoreActivity extends Activity {

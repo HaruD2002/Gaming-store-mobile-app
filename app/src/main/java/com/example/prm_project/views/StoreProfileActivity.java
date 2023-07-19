@@ -1,6 +1,5 @@
-package com.example.prm_project;
+package com.example.prm_project.views;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.prm_project.R;
 
 public class StoreProfileActivity extends AppCompatActivity {
 

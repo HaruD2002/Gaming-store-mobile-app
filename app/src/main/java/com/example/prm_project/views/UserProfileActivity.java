@@ -64,7 +64,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", -1);
+        int userId = sharedPreferences.getInt("USER_ID", 1);
         user = userViewModel.getUserInformationByID(userId).getValue();
     }
 
