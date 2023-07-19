@@ -36,6 +36,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button btn_EditProfile;
     private Button btn_ChangePassword;
     private Button btn_ChooseDate;
+    private Button btn_listAddress;
     Calendar dateOfBirth = null;
 
     TextView userNameTextView;
@@ -89,6 +90,14 @@ public class UserProfileActivity extends AppCompatActivity {
         btn_EditProfile.setOnClickListener(this::EditProfileListener);
         btn_ChangePassword = (Button) findViewById(R.id.btn_ChangePassword_1);
         btn_ChangePassword.setOnClickListener(this:: toChangePasswordActivity);
+        btn_listAddress = (Button) findViewById(R.id.btn_listAddress_1);
+        btn_listAddress.setOnClickListener(this:: toListAdressActivity);
+    }
+
+    private void toListAdressActivity(View view) {
+        Intent intent = new Intent(UserProfileActivity.this, ListAddressActivity.class);
+        intent.putExtra("USER_ID",1);
+        startActivity(intent);
     }
     private void showDatePicker() {
         DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
@@ -111,6 +120,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void toChangePasswordActivity(View view) {
         Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
+        intent.putExtra("USER_ID",1);
         startActivity(intent);
     }
 

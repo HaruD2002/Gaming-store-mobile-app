@@ -263,6 +263,14 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
+        <Button
+            android:id="@+id/btn_listAddress_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="List Address"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 
