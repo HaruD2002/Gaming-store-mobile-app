@@ -66,52 +66,52 @@ public class ChangePasswordActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("USER_ID", -1);
         user = userViewModel.getUserInformationByID(userId).getValue();
-        userViewModel.init(userDAO);
     }
 
     private void bindingView() {
-        userNameTextView = findViewById(R.id.username_textview);
-        curPasswordTextView = findViewById(R.id.et_current_password);
-        newPasswordTextView = findViewById(R.id.et_new_password);
-        renewPasswordTextView = findViewById(R.id.et_confirm_new_password);
-        notice = findViewById(R.id.txt_Notice);
+        userNameTextView = findViewById(R.id.username_textview_2);
+        curPasswordTextView = findViewById(R.id.et_current_password_2);
+        newPasswordTextView = findViewById(R.id.et_new_password_2);
+        renewPasswordTextView = findViewById(R.id.et_confirm_new_password_2);
+        notice = findViewById(R.id.txt_Notice_2);
     }
 
     private void bindingAction() {
         btn_ChangePassword = (Button) findViewById(R.id.btn_save);
-        btn_ChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int errorCode = checkError();
-                switch (errorCode){
-                    case 0:{
-                        user.setPassword(passwordHashing.encoding(newPasswordTextView.toString()));
-                        userViewModel.update(user);
-                        showNotice("Password Change Success");
-                        break;
-                    }
-                    case 1:{
-                        showNotice("Current Password Can Not Empty");
-                        break;
-                    }case 2:{
-                        showNotice("New Password Can Not Empty");
-                        break;
-                    }case 3:{
-                        showNotice("Confirm New Password Can Not Empty");
-                        break;
-                    }case 4:{
-                        showNotice("Current Password is not correct");
-                        break;
-                    }case 5:{
-                        showNotice("The new password must be different from the current password");
-                        break;
-                    }case 6:{
-                        showNotice("The new password and the Confirm password does not match");
-                        break;
-                    }
-                }
+        btn_ChangePassword.setOnClickListener(this::changePasswordEvent);
+    }
+
+    private void changePasswordEvent(View view) {
+        int errorCode = checkError();
+        switch (errorCode){
+            case 0:{
+                user.setPassword(passwordHashing.encoding(newPasswordTextView.toString()));
+                userViewModel.updatePassword(userId, user.getPassword());
+                showNotice("Password Change Success");
+                break;
             }
-        });
+            case 1:{
+                showNotice("Current Password Can Not Empty");
+                break;
+            }case 2:{
+                showNotice("New Password Can Not Empty");
+                break;
+            }case 3:{
+                showNotice("Confirm New Password Can Not Empty");
+                break;
+            }case 4:{
+                showNotice("Current Password is not correct");
+                break;
+            }case 5:{
+                showNotice("The new password must be different from the current password");
+                break;
+            }case 6:{
+                showNotice("The new password and the Confirm password does not match");
+                break;
+            }
+        }
+
+
     }
 
     private void showNotice(String text){

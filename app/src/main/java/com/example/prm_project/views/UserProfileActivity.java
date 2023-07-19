@@ -63,32 +63,38 @@ public class UserProfileActivity extends AppCompatActivity {
     private void getViewModel() {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("USER_ID", -1);
         user = userViewModel.getUserInformationByID(userId).getValue();
-        userViewModel.init(userDAO);
     }
 
     private void bindingView() {
         // Ánh xạ các phần tử UI
-        userNameTextView = findViewById(R.id.username_textview);
-        firstNameTextView = findViewById(R.id.first_name_input);
-        lastNameTextView = findViewById(R.id.last_name_input);
-        password = findViewById(R.id.password_textview);
-        phoneNumber = findViewById(R.id.phone_number_input);
-        dob = findViewById(R.id.date_of_birth_text_view);
-        onlineStatus = findViewById(R.id.online_status_switch);
-        male = findViewById(R.id.male_radio_button);
-        feMale = findViewById(R.id.female_radio_button);
+        userNameTextView = findViewById(R.id.username_textview_1);
+        firstNameTextView = findViewById(R.id.first_name_input_1);
+        lastNameTextView = findViewById(R.id.last_name_input_1);
+        password = findViewById(R.id.password_textview_1);
+        phoneNumber = findViewById(R.id.phone_number_input_1);
+        dob = findViewById(R.id.date_of_birth_text_view_1);
+        onlineStatus = findViewById(R.id.online_status_switch_1);
+        male = findViewById(R.id.male_radio_button_1);
+        feMale = findViewById(R.id.female_radio_button_1);
 
     }
 
+    private void bindingAction() {
+        btn_ChooseDate = (Button) findViewById(R.id.date_of_birth_button_1);
+        btn_ChooseDate.setOnClickListener(view -> showDatePicker());
+        btn_EditProfile = (Button) findViewById(R.id.btn_EditProfile_1);
+        btn_EditProfile.setOnClickListener(this::EditProfileListener);
+        btn_ChangePassword = (Button) findViewById(R.id.btn_ChangePassword_1);
+        btn_ChangePassword.setOnClickListener(this:: toChangePasswordActivity);
+    }
     private void showDatePicker() {
         DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
             dateOfBirth.set(year, monthOfYear, dayOfMonth);
             updateDateOfBirthTextView();
         };
-
         int year = dateOfBirth.get(Calendar.YEAR);
         int month = dateOfBirth.get(Calendar.MONTH);
         int day = dateOfBirth.get(Calendar.DAY_OF_MONTH);
@@ -103,57 +109,33 @@ public class UserProfileActivity extends AppCompatActivity {
         dob.setText(dateOfBirthString);
     }
 
-    private void bindingAction() {
-        btn_ChooseDate = (Button) findViewById(R.id.date_of_birth_button);
-        btn_ChooseDate.setOnClickListener(view -> showDatePicker());
-        btn_EditProfile = (Button) findViewById(R.id.btn_EditProfile);
-        btn_EditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btn_EditProfile.getText().equals("Save")) {
+    private void toChangePasswordActivity(View view) {
+        Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
+        startActivity(intent);
+    }
 
-
-                    //Save information and sent to database
-                    user.setFirst_name(firstNameTextView.toString());
-                    user.setLast_name(lastNameTextView.toString());
-                    user.setGender(male.isChecked());
-                    user.setPhone_number(phoneNumber.toString());
-                    user.setDOB(dob.toString());
-                    userViewModel.update(user);
-
-                    //Turn off editmode
-                    firstNameTextView.setEnabled(false);
-                    lastNameTextView.setEnabled(false);
-                    male.setEnabled(false);
-                    feMale.setEnabled(false);
-                    phoneNumber.setEnabled(false);
-                    dob.setEnabled(false);
-                    btn_EditProfile.setText("Edit");
-
-                } else {
-                    firstNameTextView.setEnabled(true);
-                    lastNameTextView.setEnabled(true);
-                    male.setEnabled(true);
-                    feMale.setEnabled(true);
-                    phoneNumber.setEnabled(true);
-                    dob.setEnabled(true);
-                    btn_EditProfile.setText("Save");
-
-                }
-            }
-        });
-        btn_ChangePassword = (Button) findViewById(R.id.btn_ChangePassword);
-        btn_ChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserProfileActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void EditProfileListener(View view) {
+        if (btn_EditProfile.getText().equals("Save")) {
+            userViewModel.updateUser(1, firstNameTextView.toString(), lastNameTextView.toString().toString(), "", male.isChecked(), " ",dob.toString());
+            firstNameTextView.setEnabled(false);
+            lastNameTextView.setEnabled(false);
+            male.setEnabled(false);
+            feMale.setEnabled(false);
+            phoneNumber.setEnabled(false);
+            dob.setEnabled(false);
+            btn_EditProfile.setText("Edit");
+        } else {
+            firstNameTextView.setEnabled(true);
+            lastNameTextView.setEnabled(true);
+            male.setEnabled(true);
+            feMale.setEnabled(true);
+            phoneNumber.setEnabled(true);
+            dob.setEnabled(true);
+            btn_EditProfile.setText("Save");
+        }
     }
 
     private void displayUserInfo() {
-
         userViewModel.getUserInformationByID(userId).observe(this, user -> {
             // Hiển thị thông tin của User lên giao diện
             String userNameShow = "";

@@ -34,7 +34,7 @@
             android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/username_textview"
+            android:id="@+id/username_textview_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -60,7 +60,7 @@
             android:enabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/first_name_input"
+                android:id="@+id/first_name_input_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -87,7 +87,7 @@
             android:enabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/last_name_input"
+                android:id="@+id/last_name_input_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -107,7 +107,7 @@
             android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/password_textview"
+            android:id="@+id/password_textview_1"
             android:layout_width="463dp"
             android:layout_height="wrap_content"
             android:text="***************"
@@ -115,7 +115,7 @@
 
         <!-- Gender -->
         <Button
-            android:id="@+id/btn_ChangePassword"
+            android:id="@+id/btn_ChangePassword_1"
             android:layout_width="179dp"
             android:layout_height="wrap_content"
             android:text="Change Password"
@@ -139,7 +139,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/male_radio_button"
+                android:id="@+id/male_radio_button_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male"
@@ -149,7 +149,7 @@
                 />
 
             <RadioButton
-                android:id="@+id/female_radio_button"
+                android:id="@+id/female_radio_button_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
@@ -169,14 +169,14 @@
             android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/date_of_birth_text_view"
+            android:id="@+id/date_of_birth_text_view_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="02/08/2001" />
 
         <Button
-            android:id="@+id/date_of_birth_button"
+            android:id="@+id/date_of_birth_button_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choose date"
@@ -202,7 +202,7 @@
             android:enabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_input"
+                android:id="@+id/email_input_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -229,7 +229,7 @@
             android:enabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phone_number_input"
+                android:id="@+id/phone_number_input_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
@@ -248,7 +248,7 @@
             android:layout_marginTop="16dp" />
 
         <Switch
-            android:id="@+id/online_status_switch"
+            android:id="@+id/online_status_switch_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Online"
@@ -256,7 +256,7 @@
             android:textColor="@color/black" />
         <!-- Save Button -->
         <Button
-            android:id="@+id/btn_EditProfile"
+            android:id="@+id/btn_EditProfile_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edit Profile"

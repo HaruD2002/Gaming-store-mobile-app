@@ -37,11 +37,17 @@ public class UserRepository {
         return userDAO.loginUser(username);
     }
 
-    public LiveData<User> existUsername(String username){
-        return userDAO.getUserName(username);
-    }
-
     public LiveData<User> getUserInformationByID(int id){
         return  userDAO.getUserById(id);
+    }
+
+    public Completable UpdateStatus(int id, int status) {return userDAO.updateOnlineStatus(id, status);}
+
+    public Completable updateUser(int id, String first_name, String last_name, String mail, boolean gender, String phone_no, String DOB) {
+        return userDAO.updateUser(id, first_name, last_name, mail, gender, phone_no, DOB);
+    }
+
+    public Completable changePassword(int id, String password) {
+        return userDAO.updatePassword(id, password);
     }
 }

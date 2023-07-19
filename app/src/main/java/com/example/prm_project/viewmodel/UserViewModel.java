@@ -50,6 +50,20 @@ public class UserViewModel extends AndroidViewModel {
         return null;
     }
 
+    public void updateOnlineStatus(int id, int status) {
+        userRepository.UpdateStatus(id, status).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+
+                        },
+                        throwable -> {
+                            Log.e("Error", "something when wrong");
+                        }
+                );
+    }
+
+
     public void CreateNewUser(String username, String password, String email, String phoneNo, TextView message){
         String encrypt_password = ph.encoding(password);
         String createdDt = new Date().toString();
@@ -70,8 +84,8 @@ public class UserViewModel extends AndroidViewModel {
                     );
     }
 
-    public void update(User user) {
-        userRepository.update(user)
+    public void updateUser(int id, String first_name, String last_name, String mail, boolean gender, String phone_no, String dob) {
+        userRepository.updateUser(id, first_name, last_name, mail, gender, phone_no, dob)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
@@ -79,6 +93,14 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<User> getUserInformationByID(int id) {
         return userRepository.getUserInformationByID(id);
+    }
+
+    public void updatePassword(int id, String password) {
+        String encrypted = ph.encoding(password);
+        userRepository.changePassword(id, encrypted)
+                .subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
 

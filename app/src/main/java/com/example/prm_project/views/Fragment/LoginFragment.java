@@ -37,6 +37,9 @@ public class LoginFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    private int OFFLINE = 0;
+    private int ONLINE = 1;
+
     private void bindingView(View view) {
         login_username = view.findViewById(R.id.login_username);
         login_password = view.findViewById(R.id.login_password);
@@ -60,13 +63,13 @@ public class LoginFragment extends Fragment {
         String encrypt = ph.encoding(password);
 
         userViewModel.Login(username,password).observe(this, user -> {
-            Log.d("user", "current trang is "+ encrypt.equals(user.getPassword()));
             if (user != null) {
                 if(ph.verifyPassword(password, user.getPassword())) {
-                    sharedPreferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+                    sharedPreferences = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
+                    userViewModel.updateOnlineStatus(user.getID(), ONLINE);
                     editor = sharedPreferences.edit();
-                    editor.putInt("ID", user.getID());
-                    editor.putString("Username", user.getUsername());
+                    editor.putInt("USER_ID", user.getID());
+                    editor.putString("USER_USERNAME", user.getUsername());
                     editor.apply();
                     Intent toHome = new Intent(getActivity(), MainActivity.class);
                     startActivity(toHome);

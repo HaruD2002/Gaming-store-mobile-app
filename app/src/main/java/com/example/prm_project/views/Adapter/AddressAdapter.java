@@ -1,4 +1,4 @@
-package com.example.prm_project.views;
+package com.example.prm_project.views.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

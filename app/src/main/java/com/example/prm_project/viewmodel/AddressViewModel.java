@@ -1,5 +1,9 @@
 package com.example.prm_project.viewmodel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,13 +17,14 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class AddressViewModel extends ViewModel {
+public class AddressViewModel extends AndroidViewModel {
 
     private AddressRepository addressRepository;
     private LiveData<List<Address>> addressList;
     private AddressDAO addressDAO;
 
-    public void Init(AddressDAO addressDAO){
+    public AddressViewModel(Application application) {
+        super(application);
         addressRepository = new AddressRepository(addressDAO);
     }
 
