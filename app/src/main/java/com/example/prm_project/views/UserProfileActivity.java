@@ -20,12 +20,15 @@ import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.User;
+import com.example.prm_project.utils.PasswordHashing;
 import com.example.prm_project.viewmodel.UserViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -33,6 +36,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private int userId;
     private User user;
+    private PasswordHashing passwordHashing = new PasswordHashing();
+
     private Button btn_EditProfile;
     private Button btn_ChangePassword;
     private Button btn_ChooseDate;
@@ -46,6 +51,7 @@ public class UserProfileActivity extends AppCompatActivity {
     RadioButton feMale;
 
     TextInputEditText phoneNumber;
+    TextInputEditText email;
     TextView dob;
     Switch onlineStatus;
     UserDAO userDAO;
@@ -64,8 +70,19 @@ public class UserProfileActivity extends AppCompatActivity {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", 1);
+        int userId = sharedPreferences.getInt("USER_ID", 0);
         user = userViewModel.getUserInformationByID(userId).getValue();
+        //TEST
+        /*user = new User();
+        user.setUsername("kingofthegods0208201");
+        user.setFirst_name("Tran");
+        user.setLast_name("Minh Quang");
+        user.setPassword(passwordHashing.encoding("02082001Quang"));
+        user.setPhone_number("0964955408");
+        user.setDOB("02/08/2001");
+        user.setMail("zedquang2001@gmail.com");
+        user.setGender(true);
+        user.setOnline_status(1);*/
     }
 
     private void bindingView() {
@@ -79,7 +96,7 @@ public class UserProfileActivity extends AppCompatActivity {
         onlineStatus = findViewById(R.id.online_status_switch_1);
         male = findViewById(R.id.male_radio_button_1);
         feMale = findViewById(R.id.female_radio_button_1);
-
+        email = findViewById(R.id.email_input_1);
     }
 
     private void bindingAction() {
@@ -88,9 +105,20 @@ public class UserProfileActivity extends AppCompatActivity {
         btn_EditProfile = (Button) findViewById(R.id.btn_EditProfile_1);
         btn_EditProfile.setOnClickListener(this::EditProfileListener);
         btn_ChangePassword = (Button) findViewById(R.id.btn_ChangePassword_1);
-        btn_ChangePassword.setOnClickListener(this:: toChangePasswordActivity);
+        btn_ChangePassword.setOnClickListener(this::toChangePasswordActivity);
     }
+
     private void showDatePicker() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date parsedDate = null;
+        try {
+            parsedDate = dateFormat.parse(dob.getText().toString());
+        }  catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        dateOfBirth = Calendar.getInstance();
+        dateOfBirth.setTime(parsedDate);
+
         DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
             dateOfBirth.set(year, monthOfYear, dayOfMonth);
             updateDateOfBirthTextView();
@@ -116,13 +144,16 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void EditProfileListener(View view) {
         if (btn_EditProfile.getText().equals("Save")) {
-            userViewModel.updateUser(1, firstNameTextView.toString(), lastNameTextView.toString().toString(), "", male.isChecked(), " ",dob.toString());
+            userViewModel.updateUser(1, firstNameTextView.toString(), lastNameTextView.toString().toString(), "", male.isChecked(), " ", dob.toString());
             firstNameTextView.setEnabled(false);
             lastNameTextView.setEnabled(false);
             male.setEnabled(false);
             feMale.setEnabled(false);
             phoneNumber.setEnabled(false);
             dob.setEnabled(false);
+            btn_ChooseDate.setVisibility(View.INVISIBLE);
+
+            email.setEnabled(false);
             btn_EditProfile.setText("Edit");
         } else {
             firstNameTextView.setEnabled(true);
@@ -131,37 +162,50 @@ public class UserProfileActivity extends AppCompatActivity {
             feMale.setEnabled(true);
             phoneNumber.setEnabled(true);
             dob.setEnabled(true);
+            btn_ChooseDate.setVisibility(View.VISIBLE);
+            btn_ChooseDate.setEnabled(true);
+            email.setEnabled(true);
             btn_EditProfile.setText("Save");
         }
     }
 
     private void displayUserInfo() {
-        userViewModel.getUserInformationByID(userId).observe(this, user -> {
-            // Hiển thị thông tin của User lên giao diện
-            String userNameShow = "";
-            for (int i = 0; i < user.getUsername().length(); i++) {
-                if (i < user.getUsername().length() / 3) {
-                    userNameShow += user.getUsername().charAt(i);
-                } else {
-                    userNameShow += "*";
-                }
+
+        // Hiển thị thông tin của User lên giao diện
+        String userNameShow = "";
+        for (int i = 0; i < user.getUsername().length(); i++) {
+            if (i < user.getUsername().length() / 3) {
+                userNameShow += user.getUsername().charAt(i);
+            } else {
+                userNameShow += "*";
             }
-            userNameTextView.setText(userNameShow);
-            firstNameTextView.setText(user.getFirst_name());
-            lastNameTextView.setText(user.getLast_name());
+        }
+        userNameTextView.setText(userNameShow);
+        firstNameTextView.setText(user.getFirst_name());
+        lastNameTextView.setText(user.getLast_name());
+        /*String passWordShow = "";
+        for (int i = 0; i < 15; i++) {
+            passWordShow += "*";
+        }*/
+        if (user.getPassword().length() <= 15) {
+            password.setText(user.getPassword());
+        } else {
             String passWordShow = "";
-            for (int i = 0; i < user.getPassword().length(); i++) {
+            for (int i = 0; i < 15; i++) {
                 passWordShow += "*";
             }
             password.setText(passWordShow);
-            if (user.isGender()) {
-                male.setChecked(true);
-            } else {
-                feMale.setChecked(true);
-            }
-            phoneNumber.setText(user.getPhone_number());
-            dob.setText(user.getDOB());
-            onlineStatus.setText(user.getOnline_status() == 1 ? "Online" : "Offline");
-        });
+
+        }
+        if (user.isGender()) {
+            male.setChecked(true);
+        } else {
+            feMale.setChecked(true);
+        }
+        email.setText(user.getMail());
+        phoneNumber.setText(user.getPhone_number());
+        dob.setText(user.getDOB());
+        onlineStatus.setText(user.getOnline_status() == 1 ? "Online" : "Offline");
     }
+
 }
