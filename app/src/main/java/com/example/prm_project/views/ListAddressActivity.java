@@ -2,8 +2,6 @@ package com.example.prm_project.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +9,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +21,6 @@ import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.viewmodel.AddressViewModel;
 import com.example.prm_project.views.Adapter.AddressAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListAddressActivity extends AppCompatActivity {
@@ -34,11 +30,9 @@ public class ListAddressActivity extends AppCompatActivity {
 
     private AddressViewModel addressViewModel;
 
-    private TextView addressNumber;
     private TextView usernameTextView;
     private TextView fullnameTextView;
     private TextView phoneTextView;
-    private EditText address;
 
     private Button add_button;
     private UserDAO userDAO;
@@ -80,22 +74,21 @@ public class ListAddressActivity extends AppCompatActivity {
         usernameTextView = findViewById(R.id.username_textview_listAddress);
         fullnameTextView = findViewById(R.id.fullname_textview_listAddress);
         phoneTextView = findViewById(R.id.phone_textview_listAddress);
-        usernameTextView = findViewById(R.id.username_textview_listAddress);
         listViewAddresses = findViewById(R.id.listViewAddresses_listAddress);
-        addressNumber = findViewById(R.id.textViewAddressId_listAddress);
-        address = findViewById(R.id.textViewAddressContent_listAddress);
+        //addressNumber = findViewById(R.id.textView_numberAddress_listAddress);
+        //address = findViewById(R.id.textViewAddressContent_listAddress);
     }
 
     private void bidingAction() {
-        Button add_button = findViewById(R.id.new_address_button);
+        add_button = findViewById(R.id.new_address_button);
         add_button.setOnClickListener(v -> {
             // Thêm một đối tượng Address mới vào danh sách và cập nhật adapter
             Address newAdress = new Address();
             newAdress.setAddress("New Address");
             newAdress.setUserID(curUser.getID());
-            addressDAO.insert(newAdress);
+            addressViewModel.insert(newAdress);
             Toast.makeText(this, "Add Success", Toast.LENGTH_SHORT).show();
-
+            addressAdapter.notifyDataSetChanged();
         });
     }
 

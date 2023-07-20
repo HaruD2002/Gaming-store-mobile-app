@@ -3,26 +3,19 @@ package com.example.prm_project.views.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm_project.R;
-import com.example.prm_project.data.DAO;
-import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.models.Address;
 import com.example.prm_project.viewmodel.AddressViewModel;
-import com.example.prm_project.viewmodel.UserViewModel;
 
 import java.util.List;
 
@@ -46,7 +39,7 @@ public class AddressAdapter extends ArrayAdapter<Address> {
         }
         Address currentAddress = addressList.get(position);
 
-        TextView textViewAddressId = convertView.findViewById(R.id.textViewAddressId_listAddress);
+        TextView textViewAddressId = convertView.findViewById(R.id.textView_shopName_listShop);
         TextView textViewAddressContent = convertView.findViewById(R.id.textViewAddressContent_listAddress);
         Button buttonEdit = convertView.findViewById(R.id.buttonEdit_listAddress);
         Button buttonDelete = convertView.findViewById(R.id.buttonDelete_listAddress);
@@ -65,10 +58,12 @@ public class AddressAdapter extends ArrayAdapter<Address> {
                     addressViewModel.update(currentAddress);
                     Toast.makeText(context, "Update Success", Toast.LENGTH_SHORT).show();
                     buttonEdit.setText("Edit");
+                    notifyDataSetChanged();
 
                 } else {
                     textViewAddressContent.setEnabled(true);
                     buttonEdit.setText("Save");
+
                 }
             }
         });
@@ -85,6 +80,7 @@ public class AddressAdapter extends ArrayAdapter<Address> {
                                 // Thực hiện hành động khi người dùng chọn Yes
                                 addressViewModel.delete(currentAddress);
                                 Toast.makeText(context, "Delete Success", Toast.LENGTH_SHORT).show();
+                                notifyDataSetChanged();
 
                             }
                         })
