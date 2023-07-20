@@ -2,22 +2,22 @@ package com.example.prm_project.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.Address;
+import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.viewmodel.AddressViewModel;
 import com.example.prm_project.views.Adapter.AddressAdapter;
 
@@ -30,18 +30,16 @@ public class ListAddressActivity extends AppCompatActivity {
 
     private AddressViewModel addressViewModel;
 
-    private TextView addressNumber;
-    private EditText address;
-    private EditText address_type;
+    private TextView usernameTextView;
+    private TextView fullnameTextView;
+    private TextView phoneTextView;
 
-    private ScrollView listView;
-    private Button edit_button;
-    private Button delete_button;
     private Button add_button;
     private UserDAO userDAO;
+    private User curUser;
     private List<Address> lsAddressOfUser;
-    private RecyclerView recyclerView;
-    AddressAdapter adapter;
+    ListView listViewAddresses;
+    AddressAdapter addressAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,30 +57,47 @@ public class ListAddressActivity extends AppCompatActivity {
         addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
         SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("USER_ID", 1);
+        curUser = userDAO.getUserById(userId).getValue();
         lsAddressOfUser = addressViewModel.getAddressListOfUser(userId).getValue();
+        //Test
+        /*curUser = new User();
+        curUser.setUsername("Kingofthegods020800");
+        curUser.setFirst_name("Tran");
+        curUser.setLast_name("MiNHQUANG");
+        curUser.setPhone_number("0361551251");
+        lsAddressOfUser = new ArrayList<>();
+        lsAddressOfUser.add(new Address(1, 1, "Address 1 Content"));
+        lsAddressOfUser.add(new Address(2,1, "Address 2 Content"));*/
     }
 
     private void bindingView() {
-        recyclerView = findViewById(R.id.address_item);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AddressAdapter(this, lsAddressOfUser, addressViewModel);
-        recyclerView.setAdapter(adapter);
+        usernameTextView = findViewById(R.id.username_textview_listAddress);
+        fullnameTextView = findViewById(R.id.fullname_textview_listAddress);
+        phoneTextView = findViewById(R.id.phone_textview_listAddress);
+        listViewAddresses = findViewById(R.id.listViewAddresses_listAddress);
+        //addressNumber = findViewById(R.id.textView_numberAddress_listAddress);
+        //address = findViewById(R.id.textViewAddressContent_listAddress);
     }
 
     private void bidingAction() {
-        Button add_button = findViewById(R.id.new_address_button);
+        add_button = findViewById(R.id.new_address_button);
         add_button.setOnClickListener(v -> {
             // Thêm một đối tượng Address mới vào danh sách và cập nhật adapter
-            Address address = new Address();
-            lsAddressOfUser.add(address);
-            addressViewModel.insert(address);
-            adapter.notifyDataSetChanged();
+            Address newAdress = new Address();
+            newAdress.setAddress("New Address");
+            newAdress.setUserID(curUser.getID());
+            addressViewModel.insert(newAdress);
+            Toast.makeText(this, "Add Success", Toast.LENGTH_SHORT).show();
+            addressAdapter.notifyDataSetChanged();
         });
-
     }
 
     private void displayListAddress() {
-
+        usernameTextView.setText(curUser.getUsername());
+        fullnameTextView.setText(curUser.getFirst_name() +" "+ curUser.getLast_name());
+        phoneTextView.setText(curUser.getPhone_number());
+        addressAdapter = new AddressAdapter(this, R.layout.item_address, lsAddressOfUser,addressViewModel);
+        listViewAddresses.setAdapter(addressAdapter);
     }
 
 }

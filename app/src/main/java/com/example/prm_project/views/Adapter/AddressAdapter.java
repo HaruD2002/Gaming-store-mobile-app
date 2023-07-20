@@ -1,15 +1,17 @@
 package com.example.prm_project.views.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm_project.R;
 import com.example.prm_project.data.dao.models.Address;
@@ -17,79 +19,81 @@ import com.example.prm_project.viewmodel.AddressViewModel;
 
 import java.util.List;
 
-public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
+public class AddressAdapter extends ArrayAdapter<Address> {
 
-    private Context context;
     private List<Address> addressList;
+    private Context context;
     private AddressViewModel addressViewModel;
 
-    public AddressAdapter(Context context, List<Address> addressList, AddressViewModel addressViewModel) {
+    public AddressAdapter(@NonNull Context context, int resource, @NonNull List<Address> objects, AddressViewModel addressViewModel) {
+        super(context, resource, objects);
         this.context = context;
-        this.addressList = addressList;
+        this.addressList = objects;
         this.addressViewModel = addressViewModel;
     }
 
-    @NonNull
     @Override
-    public AddressViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_list_address, parent, false);
-        return new AddressViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
-        Address address = addressList.get(position);
-        holder.number.setText(address.getID());
-        holder.address.setText(address.getAddress());
-        //holder.addressType.setText(address.getAddress_type());
-        holder.editButton.setOnClickListener(v -> {
-            if (holder.editButton.getText().equals("Save")) {
-
-                //Save information and sent to database
-                address.setAddress(holder.address.toString());
-                //address.setAddress_type(Integer.parseInt(holder.addressType.toString()));
-                addressViewModel.update(address);
-
-                //Turn off editmode
-                holder.address.setEnabled(false);
-                holder.addressType.setEnabled(false);
-
-                holder.editButton.setText("Edit");
-
-            }else {
-                holder.address.setEnabled(true);
-                holder.addressType.setEnabled(true);
-                holder.editButton.setText("Save");
-            }
-            // Xử lý sự kiện khi button Edit được click
-        });
-        holder.deleteButton.setOnClickListener(v -> {
-            addressViewModel.delete(address);
-
-            // Xử lý sự kiện khi button Delete được click
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return addressList.size();
-    }
-
-    public class AddressViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView number;
-        public EditText address;
-        public EditText addressType;
-        public Button editButton;
-        public Button deleteButton;
-
-        public AddressViewHolder(@NonNull View itemView) {
-            super(itemView);
-            number = itemView.findViewById(R.id.number);
-            address = itemView.findViewById(R.id.address);
-            addressType = itemView.findViewById(R.id.address_type);
-            editButton = itemView.findViewById(R.id.edit_button);
-            deleteButton = itemView.findViewById(R.id.delete_button);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_address, parent, false);
         }
+        Address currentAddress = addressList.get(position);
+
+        TextView textViewAddressId = convertView.findViewById(R.id.textView_shopName_listShop);
+        TextView textViewAddressContent = convertView.findViewById(R.id.textViewAddressContent_listAddress);
+        Button buttonEdit = convertView.findViewById(R.id.buttonEdit_listAddress);
+        Button buttonDelete = convertView.findViewById(R.id.buttonDelete_listAddress);
+
+        textViewAddressId.setText("ID: " + currentAddress.getID());
+        textViewAddressContent.setText("Address: " + currentAddress.getAddress());
+
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Xử lý sự kiện khi nút Edit được bấm
+                if (buttonEdit.getText().equals("Save")) {
+                    currentAddress.setAddress(textViewAddressContent.getText().toString());
+                    //Log.d("BUGGGG",currentAddress.getAddress());
+                    textViewAddressContent.setEnabled(false);
+                    addressViewModel.update(currentAddress);
+                    Toast.makeText(context, "Update Success", Toast.LENGTH_SHORT).show();
+                    buttonEdit.setText("Edit");
+                    notifyDataSetChanged();
+
+                } else {
+                    textViewAddressContent.setEnabled(true);
+                    buttonEdit.setText("Save");
+
+                }
+            }
+        });
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Xử lý sự kiện khi nút Delete được bấm
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Thực hiện hành động khi người dùng chọn Yes
+                                addressViewModel.delete(currentAddress);
+                                Toast.makeText(context, "Delete Success", Toast.LENGTH_SHORT).show();
+                                notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Thực hiện hành động khi người dùng chọn No
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();            }
+        });
+
+        return convertView;
     }
 }

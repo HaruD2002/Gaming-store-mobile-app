@@ -15,6 +15,7 @@ import com.example.prm_project.data.converter.BitmapConverter;
 import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.CartDAO;
 import com.example.prm_project.data.dao.CartItemDAO;
+import com.example.prm_project.data.dao.ShopDAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.Address;
 import com.example.prm_project.data.dao.models.Cart;
@@ -57,4 +58,5 @@ public abstract class DAO extends RoomDatabase {
     public abstract CartItemDAO cartItemDAO();
     public abstract CartDAO cartDAO();
     public abstract AddressDAO addressDAO();
+    public abstract ShopDAO shopDAO();
 }
