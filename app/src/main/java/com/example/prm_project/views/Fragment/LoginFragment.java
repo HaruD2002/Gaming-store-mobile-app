@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.prm_project.views.MainActivity;
+import com.example.prm_project.views.HomePage;
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
@@ -68,7 +68,7 @@ public class LoginFragment extends Fragment {
                     editor.putInt("USER_ID", user.getID());
                     editor.putString("USER_USERNAME", user.getUsername());
                     editor.apply();
-                    Intent toHome = new Intent(getActivity(), MainActivity.class);
+                    Intent toHome = new Intent(getActivity(), HomePage.class);
                     startActivity(toHome);
                 } else{
                     user = null;

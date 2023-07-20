@@ -1,4 +1,4 @@
-<<<<<<< Original<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools">
 
 <uses-permission android:name="android.permission.INTERNET" />
@@ -13,40 +13,16 @@ xmlns:tools="http://schemas.android.com/tools">
     android:supportsRtl="true"
     android:theme="@style/Theme.PRM_project"
     tools:targetApi="31">
-    <activity
-        android:name=".views.MainActivity"
-        android:exported="false" />
-    <activity
-        android:name=".views.MainActivity"
-        android:exported="true">
+    <activity android:name=".views.HomePage" android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
-
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity
-        android:name=".views.ListAddressActivity"
-        android:exported="false" />
-    <activity
-        android:name=".views.ChangePasswordActivity"
-        android:exported="false" />
-    <activity
-        android:name=".views.LoginAndRegister"
-        android:exported="false" />
-    <activity
-        android:name=".views.UserProfileActivity"
-        android:exported="false" />
+    <activity android:name=".views.ListAddressActivity" android:exported="false" />
+    <activity android:name=".views.ChangePasswordActivity" android:exported="false" />
+    <activity android:name=".views.LoginAndRegister" android:exported="false" />
+    <activity android:name=".views.UserProfileActivity" android:exported="false" />
 </application>
 
-</manifest>=======
-
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-<application>
-    <activity
-        android:name="com.example.prm_project.NewsPage"
-        android:exported="false"
-
-        />
-</application>
-</manifest>>>>>>>> Added
+</manifest>

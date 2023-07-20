@@ -9,13 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.prm_project.NewsPage;
 import com.example.prm_project.R;
 
-public class MainActivity extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
     private Button toLoginScreen;
     private Button toHomeBtn;
-    private Button toNewsbtn;
+    private Button toAllProduct;
     private Button toStorebtn;
     private SharedPreferences sp;
     private SharedPreferences.Editor ed;
@@ -23,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
     private void bindingView(){
         toLoginScreen = findViewById(R.id.toLoginScreen);
         toHomeBtn = findViewById(R.id.toHomeBtn);
-        toNewsbtn = findViewById(R.id.toNewsbtn);
-        toStorebtn = findViewById(R.id.toNewsbtn);
+        toAllProduct = findViewById(R.id.toNewsbtn);
+        toStorebtn = findViewById(R.id.toStorebtn);
     }
     private void bindingAction(){
         toLoginScreen.setOnClickListener(this::toLoginScreen);
         toHomeBtn.setOnClickListener(this::toLoginScreen);
-        toNewsbtn.setOnClickListener(this::toNewsScreen);
+        toAllProduct.setOnClickListener(this::toAllProduct);
         toStorebtn.setOnClickListener(this::toStorebtn);
     }
 
@@ -38,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(toStore);
     }
 
-    private void toNewsScreen(View view) {
-        Intent toNews = new Intent(this, NewsPage.class);
+    private void toAllProduct(View view) {
+
+        Intent toNews = new Intent(this, CatagorySelection.class);
         startActivity(toNews);
     }
 
