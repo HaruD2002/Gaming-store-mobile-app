@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -55,7 +56,6 @@ public class UserViewModel extends AndroidViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         () -> {
-
                         },
                         throwable -> {
                             Log.e("Error", "something when wrong");
@@ -72,6 +72,7 @@ public class UserViewModel extends AndroidViewModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             () -> {
+                                Toast.makeText(getApplication().getApplicationContext(), "Create Successfully", Toast.LENGTH_LONG);
                             },
                             error -> {
                                 if(error instanceof SQLiteConstraintException){
@@ -79,6 +80,8 @@ public class UserViewModel extends AndroidViewModel {
                                 }
                                 else {
                                     Log.e("Error", "something else");
+
+                                    Toast.makeText(getApplication().getApplicationContext(), "Something when wrong", Toast.LENGTH_LONG);
                                 }
                             }
                     );

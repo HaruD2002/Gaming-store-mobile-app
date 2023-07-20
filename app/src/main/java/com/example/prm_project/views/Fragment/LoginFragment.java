@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +25,9 @@ import com.example.prm_project.data.DAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.utils.PasswordHashing;
 import com.example.prm_project.viewmodel.UserViewModel;
+import com.google.android.material.shape.CornerFamily;
+import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.android.material.shape.ShapeAppearanceModel;
 
 public class LoginFragment extends Fragment {
     private EditText login_username;
@@ -62,8 +67,8 @@ public class LoginFragment extends Fragment {
         userViewModel.Login(username,password).observe(this, user -> {
             if (user != null) {
                 if(ph.verifyPassword(password, user.getPassword())) {
+//                    userViewModel.updateOnlineStatus(user.getID(), ONLINE);
                     sharedPreferences = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-                    userViewModel.updateOnlineStatus(user.getID(), ONLINE);
                     editor = sharedPreferences.edit();
                     editor.putInt("USER_ID", user.getID());
                     editor.putString("USER_USERNAME", user.getUsername());
@@ -73,9 +78,11 @@ public class LoginFragment extends Fragment {
                 } else{
                     user = null;
                     login_fail_message.setVisibility(View.VISIBLE);
+                    return;
                 }
             } else {
                 login_fail_message.setVisibility(View.VISIBLE);
+                return;
             }
         });
     }

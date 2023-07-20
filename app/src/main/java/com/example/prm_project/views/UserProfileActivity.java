@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -35,7 +36,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
     private int userId;
-    private User user;
     private PasswordHashing passwordHashing = new PasswordHashing();
 
     private Button btn_EditProfile;
@@ -55,6 +55,8 @@ public class UserProfileActivity extends AppCompatActivity {
     TextView dob;
     Switch onlineStatus;
     UserDAO userDAO;
+    private ImageButton backtoHome;
+    private ImageButton logout_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,20 +71,6 @@ public class UserProfileActivity extends AppCompatActivity {
     private void getViewModel() {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", 0);
-        user = userViewModel.getUserInformationByID(userId).getValue();
-        //TEST
-        /*user = new User();
-        user.setUsername("kingofthegods0208201");
-        user.setFirst_name("Tran");
-        user.setLast_name("Minh Quang");
-        user.setPassword(passwordHashing.encoding("02082001Quang"));
-        user.setPhone_number("0964955408");
-        user.setDOB("02/08/2001");
-        user.setMail("zedquang2001@gmail.com");
-        user.setGender(true);
-        user.setOnline_status(1);*/
     }
 
     private void bindingView() {
@@ -97,6 +85,8 @@ public class UserProfileActivity extends AppCompatActivity {
         male = findViewById(R.id.male_radio_button_1);
         feMale = findViewById(R.id.female_radio_button_1);
         email = findViewById(R.id.email_input_1);
+        backtoHome = findViewById(R.id.to_home_btn);
+        logout_btn = findViewById(R.id.logout_btn);
     }
 
     private void bindingAction() {
@@ -106,6 +96,23 @@ public class UserProfileActivity extends AppCompatActivity {
         btn_EditProfile.setOnClickListener(this::EditProfileListener);
         btn_ChangePassword = (Button) findViewById(R.id.btn_ChangePassword_1);
         btn_ChangePassword.setOnClickListener(this::toChangePasswordActivity);
+        backtoHome.setOnClickListener(this::backToHome);
+        logout_btn.setOnClickListener(this::logout);
+    }
+
+    private void logout(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("USER_ID", -1);
+        editor.apply();
+        Intent toHome = new Intent(this, HomePage.class);
+        finish();
+        startActivity(toHome);
+    }
+
+    private void backToHome(View view) {
+        Intent toHome = new Intent(this, HomePage.class);
+        startActivity(toHome);
     }
 
     private void showDatePicker() {
@@ -171,7 +178,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void displayUserInfo() {
 
-        // Hiển thị thông tin của User lên giao diện
+        SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", -1);
+        userViewModel.getUserInformationByID(userId).observe(this, user -> {
         String userNameShow = "";
         for (int i = 0; i < user.getUsername().length(); i++) {
             if (i < user.getUsername().length() / 3) {
@@ -181,8 +190,8 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         }
         userNameTextView.setText(userNameShow);
-        firstNameTextView.setText(user.getFirst_name());
-        lastNameTextView.setText(user.getLast_name());
+        firstNameTextView.setText(user.getFirst_name() == null ? " ": user.getFirst_name());
+        lastNameTextView.setText(user.getLast_name()  == null ? " ": user.getLast_name());
         /*String passWordShow = "";
         for (int i = 0; i < 15; i++) {
             passWordShow += "*";
@@ -204,8 +213,10 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         email.setText(user.getMail());
         phoneNumber.setText(user.getPhone_number());
-        dob.setText(user.getDOB());
+        dob.setText(user.getDOB() == null ? " ": user.getDOB());
         onlineStatus.setText(user.getOnline_status() == 1 ? "Online" : "Offline");
+        });
     }
 
 }
+

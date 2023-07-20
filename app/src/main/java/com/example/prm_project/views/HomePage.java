@@ -2,55 +2,79 @@ package com.example.prm_project.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.prm_project.R;
+import com.example.prm_project.views.Fragment.HomeFragment;
+import com.example.prm_project.views.Fragment.SearchFragment;
 
 public class HomePage extends AppCompatActivity {
-    private Button toLoginScreen;
-    private Button toHomeBtn;
-    private Button toAllProduct;
-    private Button toStorebtn;
+    private ImageButton toUserBtn;
+    private ImageButton toHomeBtn;
+    private ImageButton toGameBtn;
+    private ImageButton toSearchScreen;
     private SharedPreferences sp;
-    private SharedPreferences.Editor ed;
+    private Fragment homeFragment;
+    private Fragment searchFragment;
+    private int isLogin = -1;
 
     private void bindingView(){
-        toLoginScreen = findViewById(R.id.toLoginScreen);
         toHomeBtn = findViewById(R.id.toHomeBtn);
-        toAllProduct = findViewById(R.id.toNewsbtn);
-        toStorebtn = findViewById(R.id.toStorebtn);
+        toGameBtn = findViewById(R.id.toGameBtn);
+        toSearchScreen = findViewById(R.id.toSearchScreen);
+        toUserBtn = findViewById(R.id.toUserbtn);
     }
     private void bindingAction(){
-        toLoginScreen.setOnClickListener(this::toLoginScreen);
-        toHomeBtn.setOnClickListener(this::toLoginScreen);
-        toAllProduct.setOnClickListener(this::toAllProduct);
-        toStorebtn.setOnClickListener(this::toStorebtn);
+        toUserBtn.setOnClickListener(this::toUserScreen);
+        toHomeBtn.setOnClickListener(this:: toHomeScreen);
+        toGameBtn.setOnClickListener(this::toAllProduct);
+        toSearchScreen.setOnClickListener(this::toSearchScreen);
     }
 
-    private void toStorebtn(View view) {
-        Intent toStore = new Intent(this, StoreProfileActivity.class);
-        startActivity(toStore);
+    private void toSearchScreen(View view) {
+        if(searchFragment == null) {
+            searchFragment = new SearchFragment();
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_container, searchFragment)
+                .commit();
+    }
+
+    private void toHomeScreen(View view) {
+        if(homeFragment == null){
+            homeFragment = new HomeFragment();
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_container, homeFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void toAllProduct(View view) {
-
         Intent toNews = new Intent(this, CatagorySelection.class);
         startActivity(toNews);
     }
 
-    private void toLoginScreen(View view) {
+    private void toUserScreen(View view) {
         sp = getSharedPreferences("USER", Context.MODE_PRIVATE);
-        int haveid = sp.getInt("USER_ID", -1);
-        if(haveid == -1){
+        isLogin = sp.getInt("USER_ID", -1);
+        Log.d("isLogin", isLogin+"");
+        if(isLogin == -1){
             Intent toLogin = new Intent(this, LoginAndRegister.class);
+            finish();
             startActivity(toLogin);
         }else {
             Intent toProfile = new Intent(this, UserProfileActivity.class);
+            finish();
             startActivity(toProfile);
         }
     }
@@ -58,7 +82,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_home_page);
         bindingView();
         bindingAction();
     }

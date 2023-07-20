@@ -12,6 +12,7 @@ public class Category {
     @ColumnInfo(name = "category_name" )
     private String CategoryName;
 
+
     public Category() {
     }
 

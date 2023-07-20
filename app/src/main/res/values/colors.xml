@@ -19,4 +19,8 @@
     <color name="lavender">#8692f7</color>
     <color name="red">#c70000</color>
     <color name="green">#00ff00</color>
+    <color name="navy_green">#d7ffdb</color>
+    <color name="off_white_text">#A4907C</color>
+    <color name="brown_text">#3F2305</color>
+    <color name="other_brown_text">#6C3428</color>
 </resources>
