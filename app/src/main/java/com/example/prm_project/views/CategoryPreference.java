@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.prm_project.R;
 import com.example.prm_project.data.DAO;
@@ -24,37 +25,26 @@ public class CategoryPreference extends AppCompatActivity {
     private ArrayList<Category> categoryListItem;
 
     private void getVM() {
-//        categoryDAO= DAO.getInstance(getApplicationContext()).categoryDAO();
         categoryViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
     }
-//    private void fetchData() {
-//        categoryViewModel.getAllCategory().observe(this, categories -> {
-//            for(Category c : categories){
-//                Category item = new Category();
-//                item.setCategoryName(c.getCategoryName());
-//                item.setCategoryName(c.getDescription());
-//                categoryListItem.add(item);
-//            }
-//        });
-//    }
+    private void fetchData() {
+        categoryViewModel.getAllCategory().observe(this, categories -> {
+            categoryList.setLayoutManager(new GridLayoutManager(this, 2));
+            categoryList.setAdapter(new CategoryPefAdapter(categories, this));
+        });
+    }
 
     private void bindingView(){
         categoryList = findViewById(R.id.category_list_view);
 
     }
 
-    private void bindingReferenceData(){
-        categoryList.setLayoutManager(new GridLayoutManager(this, 2));
-        categoryList.setAdapter(new CategoryPefAdapter(categoryListItem, this));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_preference);
+        setContentView(R.layout.activity_category_selection);
         getVM();
-//        fetchData();
+        fetchData();
         bindingView();
-        bindingReferenceData();
     }
 }

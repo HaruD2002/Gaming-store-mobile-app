@@ -1,6 +1,7 @@
 package com.example.prm_project.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -16,6 +17,7 @@ import com.example.prm_project.data.dao.AddressDAO;
 import com.example.prm_project.data.dao.CartDAO;
 import com.example.prm_project.data.dao.CartItemDAO;
 import com.example.prm_project.data.dao.ShopDAO;
+import com.example.prm_project.data.dao.CategoryDAO;
 import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.Address;
 import com.example.prm_project.data.dao.models.Cart;
@@ -26,6 +28,9 @@ import com.example.prm_project.data.dao.models.ItemCategory;
 import com.example.prm_project.data.dao.models.ItemImage;
 import com.example.prm_project.data.dao.models.Shop;
 import com.example.prm_project.data.dao.models.User;
+import com.example.prm_project.utils.PasswordHashing;
+
+import java.util.concurrent.Executors;
 
 
 @Database(entities = {
@@ -55,8 +60,9 @@ public abstract class DAO extends RoomDatabase {
     }
 
     public abstract UserDAO userDAO();
-    public abstract CartItemDAO cartItemDAO();
     public abstract CartDAO cartDAO();
     public abstract AddressDAO addressDAO();
     public abstract ShopDAO shopDAO();
+    public abstract CategoryDAO categoryDAO();
+    public abstract CartItemDAO cartItemDAO();
 }

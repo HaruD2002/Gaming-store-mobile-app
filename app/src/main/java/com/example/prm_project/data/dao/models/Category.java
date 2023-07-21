@@ -9,16 +9,20 @@ import androidx.room.PrimaryKey;
 public class Category {
     @PrimaryKey(autoGenerate = true)
     private int ID;
-    @ColumnInfo(name = "category_name" )
-    private String CategoryName;
+    @ColumnInfo(name = "category_name")
+    private String categoryName;
+
+    @ColumnInfo(name = "description")
+    private String description;
 
 
     public Category() {
     }
 
-    public Category(int ID, String categoryName) {
+    public Category(int ID, String categoryName, String description) {
         this.ID = ID;
-        CategoryName = categoryName;
+        this.categoryName = categoryName;
+        this.description = description;
     }
 
     public int getID() {
@@ -30,10 +34,18 @@ public class Category {
     }
 
     public String getCategoryName() {
-        return CategoryName;
+        return categoryName;
     }
 
     public void setCategoryName(String categoryName) {
-        CategoryName = categoryName;
+        this.categoryName = categoryName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

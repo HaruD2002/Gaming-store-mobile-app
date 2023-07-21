@@ -14,23 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM_project"
         tools:targetApi="31">
+		<activity
+            android:name=".CategorySelection"
+            android:exported="false"
+            android:label="@string/title_activity_category_selection"
+            android:theme="@style/Theme.PRM_project" />
         <activity
-            android:name=".views.ShopProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.ListShopActivity"
+            android:name=".views.HomePage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".views.HomePage"
-            android:exported="true"></activity>
-        <activity
-            android:name=".views.ListAddressActivity"
-            android:exported="false" />
         <activity
             android:name=".views.ChangePasswordActivity"
             android:exported="false" />
@@ -39,6 +36,21 @@
             android:exported="false" />
         <activity
             android:name=".views.UserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.CategoryPreference"
+            android:exported="true" />
+        <activity
+            android:name=".views.ListAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.UpdateStoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ShopProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ListShopActivity"
             android:exported="false" />
     </application>
 

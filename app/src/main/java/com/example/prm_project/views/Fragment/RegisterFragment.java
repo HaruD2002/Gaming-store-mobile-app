@@ -16,9 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.prm_project.R;
-import com.example.prm_project.data.DAO;
-import com.example.prm_project.data.dao.UserDAO;
-import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.utils.UserValidator;
 import com.example.prm_project.viewmodel.UserViewModel;
 
@@ -29,12 +26,10 @@ import com.example.prm_project.viewmodel.UserViewModel;
     private EditText u_password;
     private EditText u_email;
     private EditText u_phone;
-    private UserDAO userDAO;
     private UserViewModel userViewModel;
     private TextView register_exist_username_message;
 
      private void getVM(){
-         userDAO = DAO.getInstance(getActivity().getApplicationContext()).userDAO();
          userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
      }
 

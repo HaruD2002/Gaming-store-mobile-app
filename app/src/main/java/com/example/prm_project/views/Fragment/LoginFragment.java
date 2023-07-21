@@ -39,8 +39,7 @@ public class LoginFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private int OFFLINE = 0;
-    private int ONLINE = 1;
+    private final int ONLINE = 1;
 
     private void bindingView(View view) {
         login_username = view.findViewById(R.id.login_username);
@@ -62,8 +61,6 @@ public class LoginFragment extends Fragment {
         String username = login_username.getText().toString();
         String password = login_password.getText().toString();
         PasswordHashing ph = new PasswordHashing();
-        String encrypt = ph.encoding(password);
-
         userViewModel.Login(username,password).observe(this, user -> {
             if (user != null) {
                 if(ph.verifyPassword(password, user.getPassword())) {
@@ -76,7 +73,6 @@ public class LoginFragment extends Fragment {
                     Intent toHome = new Intent(getActivity(), HomePage.class);
                     startActivity(toHome);
                 } else{
-                    user = null;
                     login_fail_message.setVisibility(View.VISIBLE);
                     return;
                 }

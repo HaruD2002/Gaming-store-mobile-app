@@ -60,14 +60,17 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void toAllProduct(View view) {
-        Intent toNews = new Intent(this, CatagorySelection.class);
+        Intent toNews = new Intent(this, CategoryPreference.class);
         startActivity(toNews);
     }
 
     private void toUserScreen(View view) {
         sp = getSharedPreferences("USER", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.putInt("USER_ID", -1);
+//        editor.apply();
         isLogin = sp.getInt("USER_ID", -1);
-        Log.d("isLogin", isLogin+"");
+//        Log.d("isLogin", isLogin+"");
         if(isLogin == -1){
             Intent toLogin = new Intent(this, LoginAndRegister.class);
             finish();

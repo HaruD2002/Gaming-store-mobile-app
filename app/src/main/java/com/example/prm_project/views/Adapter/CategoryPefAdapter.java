@@ -1,6 +1,7 @@
 package com.example.prm_project.views.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,14 @@ import com.example.prm_project.data.dao.models.Category;
 import com.example.prm_project.views.ViewHolder.CategoryVH;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryPefAdapter extends RecyclerView.Adapter<CategoryVH> {
 
-    private ArrayList<Category> categoryListItem;
+    private List<Category> categoryListItem;
     private Context context;
     private LayoutInflater inflater;
-    public CategoryPefAdapter(ArrayList<Category> categoryListItem, Context context) {
+    public CategoryPefAdapter(List<Category> categoryListItem, Context context) {
         this.categoryListItem = categoryListItem;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -34,11 +36,12 @@ public class CategoryPefAdapter extends RecyclerView.Adapter<CategoryVH> {
 
     @Override
     public void onBindViewHolder(@NonNull CategoryVH holder, int position) {
-
+        Category c = categoryListItem.get(position);
+        holder.setCategory(c);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return categoryListItem.size();
     }
 }
