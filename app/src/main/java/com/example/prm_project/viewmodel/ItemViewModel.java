@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.prm_project.data.dao.models.Category;
+import com.example.prm_project.data.dao.models.Item;
 import com.example.prm_project.data.repository.ItemRepository;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public class ItemViewModel extends AndroidViewModel {
     public LiveData<List<Category>> getAllCategory(){
         allCategory =  itemRepository.CategoryList();
         return allCategory;
+    }
+
+    public LiveData<List<Item>> getAllItemByCategory(int category_id){
+        return itemRepository.getAllItemByCategory(category_id);
     }
 
     public void createCategory(String name, String description){
