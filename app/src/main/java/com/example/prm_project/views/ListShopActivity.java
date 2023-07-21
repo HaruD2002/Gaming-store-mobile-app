@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class ListShopActivity extends AppCompatActivity {
     ShopDAO shopDAO;
     private ShopViewModel shopViewModel;
     private ListView listViewAddresses_listAddress;
+    private TextView notification;
     private Button btn_createShop_listshop;
     private ShopAdapter shopAdapter;
     @Override
@@ -48,7 +50,7 @@ public class ListShopActivity extends AppCompatActivity {
     }
     private void bindingView() {
         listViewAddresses_listAddress = findViewById(R.id.listViewAddresses_listAddress);
-
+        notification = findViewById(R.id.notification_listShop);
     }
     private void bidingAction() {
         btn_createShop_listshop = findViewById(R.id.btn_createShop_listshop);
@@ -66,8 +68,13 @@ public class ListShopActivity extends AppCompatActivity {
         List<Shop>  lsAllShop = shopViewModel.getShopListContainString(context).getValue();
 
         shopViewModel.getShopListContainString(context).observe(this, shops -> {
+            if(shops.size() == 0){
+                notification.setText("No Result");
+                notification.setVisibility(View.VISIBLE);
+            }else {
             shopAdapter = new ShopAdapter(this, R.layout.item_shop, shops,shopViewModel);
             listViewAddresses_listAddress.setAdapter(shopAdapter);
+            }
         });
         /*lsAllShop = new ArrayList<>();
         Shop shop1 = new Shop();
