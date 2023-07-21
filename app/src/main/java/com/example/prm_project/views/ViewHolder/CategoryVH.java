@@ -26,18 +26,6 @@ public class CategoryVH extends RecyclerView.ViewHolder {
 
     private void bindingView(View view) {
         category_name_txt = view.findViewById(R.id.category_name_txt);
-        category_name_txt.setOnClickListener(this::toItemWithCategory);
-    }
-
-
-    private void toItemWithCategory(View view) {
-        int position = getAdapterPosition();
-        SharedPreferences sp = context.getSharedPreferences("category_id", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt("id", position);
-        editor.apply();
-        Intent toList = new Intent(view.getContext(), ItemList.class);
-        view.getContext().startActivity(toList);
     }
 
     public CategoryVH(View view, Context context) {

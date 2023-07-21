@@ -43,7 +43,6 @@ public class CategoryPefAdapter extends RecyclerView.Adapter<CategoryVH> {
     public void onBindViewHolder(@NonNull CategoryVH holder, int position) {
         Category c = categoryListItem.get(position);
         holder.setCategory(c);
-        l.add(c.getID());
         holder.itemView.setOnClickListener(this::toItemWithCategory);
     }
 
