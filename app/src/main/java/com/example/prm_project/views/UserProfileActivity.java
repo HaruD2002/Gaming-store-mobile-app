@@ -118,13 +118,18 @@ public class UserProfileActivity extends AppCompatActivity {
     private void showDatePicker() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date parsedDate = null;
-        try {
-            parsedDate = dateFormat.parse(dob.getText().toString());
-        }  catch (ParseException e) {
-            throw new RuntimeException(e);
+        if (dob.getText().toString() != null) {
+            try {
+                parsedDate = dateFormat.parse(dob.getText().toString());
+                dateOfBirth = Calendar.getInstance();
+                dateOfBirth.setTime(parsedDate);
+            } catch (ParseException e) {
+                parsedDate = new Date(01/01/2001);
+                dateOfBirth = Calendar.getInstance();
+                dateOfBirth.setTime(parsedDate);
+            }
         }
-        dateOfBirth = Calendar.getInstance();
-        dateOfBirth.setTime(parsedDate);
+
 
         DatePickerDialog.OnDateSetListener onDateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
             dateOfBirth.set(year, monthOfYear, dayOfMonth);
@@ -151,7 +156,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void EditProfileListener(View view) {
         if (btn_EditProfile.getText().equals("Save")) {
-            userViewModel.updateUser(1, firstNameTextView.toString(), lastNameTextView.toString().toString(), "", male.isChecked(), " ", dob.toString());
+            Log.d("SIDHAOFOW","HERE");
+            SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
+            userId = sharedPreferences.getInt("USER_ID",-1);
+            userViewModel.updateUser(userId, firstNameTextView.getText().toString(), lastNameTextView.getText().toString(), email.getText().toString(), male.isChecked() == true, phoneNumber.getText().toString(), dob.getText().toString());
             firstNameTextView.setEnabled(false);
             lastNameTextView.setEnabled(false);
             male.setEnabled(false);
@@ -181,40 +189,40 @@ public class UserProfileActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("USER_ID", -1);
         userViewModel.getUserInformationByID(userId).observe(this, user -> {
-        String userNameShow = "";
-        for (int i = 0; i < user.getUsername().length(); i++) {
-            if (i < user.getUsername().length() / 3) {
-                userNameShow += user.getUsername().charAt(i);
-            } else {
-                userNameShow += "*";
+            String userNameShow = "";
+            for (int i = 0; i < user.getUsername().length(); i++) {
+                if (i < user.getUsername().length() / 3) {
+                    userNameShow += user.getUsername().charAt(i);
+                } else {
+                    userNameShow += "*";
+                }
             }
-        }
-        userNameTextView.setText(userNameShow);
-        firstNameTextView.setText(user.getFirst_name() == null ? " ": user.getFirst_name());
-        lastNameTextView.setText(user.getLast_name()  == null ? " ": user.getLast_name());
+            userNameTextView.setText(userNameShow);
+            firstNameTextView.setText(user.getFirst_name() == null ? " " : user.getFirst_name());
+            lastNameTextView.setText(user.getLast_name() == null ? " " : user.getLast_name());
         /*String passWordShow = "";
         for (int i = 0; i < 15; i++) {
             passWordShow += "*";
         }*/
-        if (user.getPassword().length() <= 15) {
-            password.setText(user.getPassword());
-        } else {
-            String passWordShow = "";
-            for (int i = 0; i < 15; i++) {
-                passWordShow += "*";
-            }
-            password.setText(passWordShow);
+            if (user.getPassword().length() <= 15) {
+                password.setText(user.getPassword());
+            } else {
+                String passWordShow = "";
+                for (int i = 0; i < 15; i++) {
+                    passWordShow += "*";
+                }
+                password.setText(passWordShow);
 
-        }
-        if (user.isGender()) {
-            male.setChecked(true);
-        } else {
-            feMale.setChecked(true);
-        }
-        email.setText(user.getMail());
-        phoneNumber.setText(user.getPhone_number());
-        dob.setText(user.getDOB() == null ? " ": user.getDOB());
-        onlineStatus.setText(user.getOnline_status() == 1 ? "Online" : "Offline");
+            }
+            if (user.isGender()) {
+                male.setChecked(true);
+            } else {
+                feMale.setChecked(true);
+            }
+            email.setText(user.getMail());
+            phoneNumber.setText(user.getPhone_number());
+            dob.setText(user.getDOB() == null ? " " : user.getDOB());
+            onlineStatus.setText(user.getOnline_status() == 1 ? "Online" : "Offline");
         });
     }
 
