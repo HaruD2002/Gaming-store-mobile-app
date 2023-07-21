@@ -156,7 +156,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void EditProfileListener(View view) {
         if (btn_EditProfile.getText().equals("Save")) {
-            Log.d("SIDHAOFOW","HERE");
             SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
             userId = sharedPreferences.getInt("USER_ID",-1);
             userViewModel.updateUser(userId, firstNameTextView.getText().toString(), lastNameTextView.getText().toString(), email.getText().toString(), male.isChecked() == true, phoneNumber.getText().toString(), dob.getText().toString());

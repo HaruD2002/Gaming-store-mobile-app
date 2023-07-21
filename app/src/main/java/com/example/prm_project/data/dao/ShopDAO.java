@@ -26,7 +26,8 @@ public interface ShopDAO {
 
     @Query("select * from Shop")
     LiveData<List<Shop>> getAllShops();
-
+    @Query("SELECT * FROM Shop WHERE shop_name LIKE :searchQuery")
+    LiveData<List<Shop>> getAllShopsContainString(String searchQuery);
     @Query("Select * from Shop where Shop.ID = :id")
     LiveData<Shop> getShopById(int id);
 

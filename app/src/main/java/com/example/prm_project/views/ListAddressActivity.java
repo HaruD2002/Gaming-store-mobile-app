@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import com.example.prm_project.data.dao.UserDAO;
 import com.example.prm_project.data.dao.models.Address;
 import com.example.prm_project.data.dao.models.User;
 import com.example.prm_project.viewmodel.AddressViewModel;
+import com.example.prm_project.viewmodel.UserViewModel;
 import com.example.prm_project.views.Adapter.AddressAdapter;
 
 import java.util.List;
@@ -26,20 +28,15 @@ import java.util.List;
 public class ListAddressActivity extends AppCompatActivity {
 
     AddressDAO addressDAO;
-    private int userId;
-
     private AddressViewModel addressViewModel;
-
     private TextView usernameTextView;
     private TextView fullnameTextView;
     private TextView phoneTextView;
-
     private Button add_button;
     private UserDAO userDAO;
-    private User curUser;
-    private List<Address> lsAddressOfUser;
     ListView listViewAddresses;
     AddressAdapter addressAdapter;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +52,8 @@ public class ListAddressActivity extends AppCompatActivity {
         addressDAO = DAO.getInstance(getApplicationContext()).addressDAO();
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", 1);
-        curUser = userDAO.getUserById(userId).getValue();
-        lsAddressOfUser = addressViewModel.getAddressListOfUser(userId).getValue();
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
         //Test
         /*curUser = new User();
         curUser.setUsername("Kingofthegods020800");
@@ -85,7 +80,9 @@ public class ListAddressActivity extends AppCompatActivity {
             // Thêm một đối tượng Address mới vào danh sách và cập nhật adapter
             Address newAdress = new Address();
             newAdress.setAddress("New Address");
-            newAdress.setUserID(curUser.getID());
+            SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
+            int userId = sharedPreferences.getInt("USER_ID", -1);
+            newAdress.setUserID(userId);
             addressViewModel.insert(newAdress);
             Toast.makeText(this, "Add Success", Toast.LENGTH_SHORT).show();
             addressAdapter.notifyDataSetChanged();
@@ -93,11 +90,19 @@ public class ListAddressActivity extends AppCompatActivity {
     }
 
     private void displayListAddress() {
-        usernameTextView.setText(curUser.getUsername());
-        fullnameTextView.setText(curUser.getFirst_name() +" "+ curUser.getLast_name());
-        phoneTextView.setText(curUser.getPhone_number());
-        addressAdapter = new AddressAdapter(this, R.layout.item_address, lsAddressOfUser,addressViewModel);
-        listViewAddresses.setAdapter(addressAdapter);
+        addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", -1);
+        userViewModel.getUserInformationByID(userId).observe(this, curUser -> {
+            usernameTextView.setText(curUser.getUsername());
+            fullnameTextView.setText(curUser.getFirst_name() +" "+ curUser.getLast_name());
+            phoneTextView.setText(curUser.getPhone_number());
+        });
+        addressViewModel.getAddressListOfUser(userId).observe(this, addresses -> {
+            addressAdapter = new AddressAdapter(this, R.layout.item_address, addresses,addressViewModel);
+            listViewAddresses.setAdapter(addressAdapter);
+        });
+
     }
 
 }

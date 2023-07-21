@@ -23,8 +23,6 @@ public class ShopProfileActivity extends AppCompatActivity {
 
     ShopDAO shopDAO;
     ShopViewModel shopViewModel;
-    Shop currentShop;
-
     EditText shop_name_editText;
     TextView datecreated_textview;
     ImageView onlineStatus_imageView;
@@ -42,9 +40,6 @@ public class ShopProfileActivity extends AppCompatActivity {
     private void getViewModel() {
         shopDAO = DAO.getInstance(getApplicationContext()).shopDAO();
         shopViewModel = new ViewModelProvider(this).get(ShopViewModel.class);
-        SharedPreferences sharedPreferences = getSharedPreferences("SHOP", Context.MODE_PRIVATE);
-        int shop_id = sharedPreferences.getInt("SHOP_ID", 0);
-        currentShop = shopViewModel.getShopInformationByID(shop_id).getValue();
         //TEST
         /*user = new User();
         user.setUsername("kingofthegods0208201");
@@ -71,6 +66,9 @@ public class ShopProfileActivity extends AppCompatActivity {
 
     private void EditButtonListener(View view) {
         if (editButton.getText().equals("Save")) {
+            SharedPreferences sharedPreferences = getSharedPreferences("SHOP", Context.MODE_PRIVATE);
+            int shop_id = sharedPreferences.getInt("SHOP_ID", 0);
+            Shop currentShop = shopViewModel.getShopInformationByID(shop_id).getValue();
             currentShop.setShopName(shop_name_editText.getText().toString());
             shopViewModel.updateShop(currentShop.getID(),currentShop.getShopName(),currentShop.getShop_owner());
             shop_name_editText.setEnabled(false);
@@ -83,13 +81,18 @@ public class ShopProfileActivity extends AppCompatActivity {
     }
 
     private void displayShopInfo() {
-
-            shop_name_editText.setText(currentShop.getShopName());
-            datecreated_textview.setText("Created: "+currentShop.getCreated_dt());
-            if(currentShop.isOnlineStatus()){
+        SharedPreferences sharedPreferences = getSharedPreferences("SHOP", Context.MODE_PRIVATE);
+        int shop_id = sharedPreferences.getInt("SHOP_ID", 0);
+        Shop currentShop = shopViewModel.getShopInformationByID(shop_id).getValue();
+        shopViewModel.getShopInformationByID(shop_id).observe(this, shop -> {
+            shop_name_editText.setText(shop.getShopName());
+            datecreated_textview.setText("Created: "+shop.getCreated_dt());
+            if(shop.isOnlineStatus()){
                 onlineStatus_imageView.setVisibility(View.VISIBLE);
             }else {
                 onlineStatus_imageView.setVisibility(View.INVISIBLE);
             }
+        });
+
     }
 }

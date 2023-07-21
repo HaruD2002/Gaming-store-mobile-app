@@ -35,6 +35,9 @@ public class ShopViewModel extends AndroidViewModel {
     public LiveData<List<Shop>> getShopList() {
         return shopRepository.getShopList();
     }
+    public LiveData<List<Shop>> getShopListContainString(String string) {
+        return shopRepository.getShopListContainString(string);
+    }
 
 
     public void CreateNewShop(String shop_name, int shop_owner, boolean online_status) {
@@ -44,6 +47,8 @@ public class ShopViewModel extends AndroidViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
+
+
 
     public void updateShop(int id, String shop_name, int shop_owner) {
         shopRepository.updateShop(id, shop_name, shop_owner)

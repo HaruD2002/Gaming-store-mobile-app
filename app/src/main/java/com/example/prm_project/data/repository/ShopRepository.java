@@ -30,6 +30,9 @@ public class ShopRepository {
     public LiveData<List<Shop>> getShopList() {
         return shopDAO.getAllShops();
     }
+    public LiveData<List<Shop>> getShopListContainString(String string) {
+        return shopDAO.getAllShopsContainString(string);
+    }
 
 
     public Completable CreateShop(String shop_name, String created_dt,int shop_owner, boolean online_status){
@@ -39,6 +42,8 @@ public class ShopRepository {
     public LiveData<Shop> getShopInformationByID(int id){
         return  shopDAO.getShopById(id);
     }
+
+
 
     public Completable UpdateStatus(int id, int status) {return shopDAO.updateOnlineStatus(id, status);}
 
