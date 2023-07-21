@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -63,9 +64,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void getViewModel() {
         userDAO = DAO.getInstance(getApplicationContext()).userDAO();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", Context.MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("USER_ID", 1);
-        user = userViewModel.getUserInformationByID(userId).getValue();
+
         //Test
         /*user = new User();
         user.setUsername("kingofthegods02082001");
@@ -124,7 +123,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void displayUserInfo() {
-
+        SharedPreferences sharedPreferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", 1);
+        userViewModel.getUserInformationByID(userId).observe(this, user -> {
+            Log.d("USERID",user.getPassword()+"");
             String userNameShow = "";
             for (int i = 0; i < user.getUsername().length(); i++) {
                 if (i < user.getUsername().length() / 3) {
@@ -134,5 +136,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 }
             }
             userNameTextView.setText(userNameShow);
+        });
     }
 }

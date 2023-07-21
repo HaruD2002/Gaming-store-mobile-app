@@ -29,7 +29,6 @@ public class UserViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private final PasswordHashing ph = new PasswordHashing();
     private LiveData<List<User>> userList;
-    private UserDAO userDAO;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
